@@ -19,8 +19,8 @@ app.use('/users', userRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
-// process.env.MONGODB_URI là chuỗi kết nối của mongodb
-// trên môi trường bất kỳ
+// process.env.MONGODB_URI là chuỗi kết nối của csdl mongodb
+// trên môi trường hiện hành
 
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

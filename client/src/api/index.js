@@ -1,7 +1,8 @@
 import axios from 'axios';
-// url để gửi dữ liệu trên localhost server
+// server endpoint
+//heroku
+const url = 'https://real-estate-shop.herokuapp.com/users';
+// localhost
 // const url = 'http://localhost:80/users';
-// url để gửi dữ liệu đến web trên herokuapp
-const url = 'https://gaming-account-shop.herokuapp.com/users';
 
 export const createUser = (newUser) => axios.post(url, newUser);

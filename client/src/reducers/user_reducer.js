@@ -2,10 +2,10 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   ADD_CREDIT,
-  BUY_ACCOUNT,
-  FILTER_ACCOUNT,
+  BUY_HOUSE,
+  FILTER_HOUSE,
   AUTH_USER,
-  ON_SUCCESS_BUY_USER,
+  ON_BUY_HOUSE,
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -14,13 +14,13 @@ export default (state = {}, action) => {
         return { ...state, register: action.payload }
     case LOGIN_USER:
         return { ...state, login: action.payload }
-    case BUY_ACCOUNT:
-        return { ...state, account: action.payload }
+    case BUY_HOUSE:
+        return { ...state, house: action.payload }
     case ADD_CREDIT:
         return { ...state, credit: action.payload}
-    case FILTER_ACCOUNT:
-        return { ...state, filterCategory: action.payload}
-    case ON_SUCCESS_BUY_USER:
+    case FILTER_HOUSE:
+        return { ...state, filterHouse: action.payload}
+    case ON_BUY_HOUSE:
         return { ...state, credit: action.payload}
     case AUTH_USER:
         return { ...state, isLogin: action.payload}  

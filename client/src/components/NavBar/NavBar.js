@@ -18,7 +18,7 @@ const NavBar = ({userMode, userName, balance}) => {
     return(
         <header>
             <div className="content-wrapper">
-                <h1>Gaming Account Shop</h1>
+                <h1>Real Estate Shop</h1>
                 <nav>
                     {
                         userMode === "admin" || userMode === "user" 
@@ -38,11 +38,14 @@ const NavBar = ({userMode, userName, balance}) => {
                             setIsLoginPageOpen(false);
                             modal.current.open();
                         }}>
-                            Nạp thẻ</a>
+                            Thông tin thẻ</a>
                     }
                     {
                         userMode === "user" 
-                        ? <a style={{color: "yellow"}}> | {userName} | Số dư: {balance} VND |</a>
+                        ? <>
+                        <a style={{color: "yellow"}}> | {userName} | </a>
+                        <a> Số dư: {balance} Tỷ </a>
+                        </>
                         : null
                     }
                     {

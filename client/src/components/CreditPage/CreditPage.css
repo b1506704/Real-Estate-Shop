@@ -1,7 +1,7 @@
 .credit_container {
-    height: 430px;
+    height: 350px;
     width: 450px;
-    background-color: rgba(173, 173, 155, 0.753);
+    background-color: rgba(255, 255, 255, 0.753);
     border-radius: 15px;
  }
  .credit_container h1 {
@@ -20,11 +20,13 @@
      margin-bottom: 25px;
  }
  .credit_container div label {
-     font-size: 30px;
+     font-size: 22px;
+     font-weight: bold;
  }
  .credit_container input[type='text'], .credit_container select {
-     color: rgb(10, 9, 10);
+     color: rgb(2, 2, 2);
      font-size: 21px;
+     font-weight: bold;
      padding-left: 5px;
      height: 30px;
      width: 120px;
@@ -32,15 +34,15 @@
      border-radius: 5px;
  }
 .credit_container input[type=submit], .credit_container input[type=button] {
-     height: 80px;
-     width: 80px;
-     font-size: 15px;
-     border-radius: 100%;
-     color: rgb(252, 252, 252);
-     border-style: none;
-     background-color: black;
-     transition: all 0.35s ease-in-out;
-     margin: 0;
+    height: 80px;
+    width: 80px;
+    font-size: 20px;
+    border-radius: 100%;
+    color: rgb(233, 223, 223);
+    border-style: none;
+    background-color: rgb(78, 68, 68);
+    transition: all 0.35s ease-in-out;
+    margin: 0;
  }
  .button_container {
      display: flex;
@@ -49,8 +51,7 @@
      margin: 0;
  }
  .credit_container input[type=submit]:hover, .credit_container input[type=button]:hover {
-     transform: translateY(2.5px);
-     color: rgb(207, 195, 195);
+    transform: scale(1.05);
  }
  
  .credit_container .scroll_position_holder {

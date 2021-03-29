@@ -2,21 +2,16 @@ header {
 	position: sticky;
 	top: 0;
 	width: 100%;
-	border-left-style: none;
-	border-right-style: none;
-	border-top-style: none;
-	border-bottom-style: dotted; 
-    border-color: rgb(202, 194, 202);
 	user-select: none;
-	/* backdrop-filter: blur(4px); */
-	background-color: rgba(73, 73, 50, 0.671);
-	box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+	background-color: rgba(179, 179, 166, 0.877);
+	box-shadow: rgba(150, 143, 143, 0.56) 0px 22px 70px 4px;
 	transition: all 0.5s ease-in-out;
 	overflow: hidden;
 	z-index: 999;
 }
 header:hover {
-	background-color: rgba(44, 44, 39, 0.363);
+	background-color: rgb(44, 44, 39);
+	
 }
 header .content-wrapper {
 	display: flex;
@@ -30,8 +25,7 @@ header h1 {
 	color: rgb(238, 253, 255);
 	padding: 24px 0;
 	letter-spacing: 2px;
-	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #9dd7e6, 0 0 20px rgb(123, 163, 204), 0 0 25px #0073e6, 0 0 30px #50769c, 0 0 35px #17416b;
-	/* font-family: Title; */
+	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #9dd7e6;
 }
 header nav {
 	display: flex;
@@ -45,10 +39,13 @@ header nav a {
 	text-decoration: none;
 	color: rgb(238, 253, 255);
 	font-size: 25px;
+	width: 200px;
+	text-align: center;
 	padding: 10px 10px;
 	margin: 0 10px;
-	transition: all 0.5s ease-out;
+	transition: all 0.35s ease-out;
 }
 header nav a:hover {
 	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #9dd7e6, 0 0 20px rgb(123, 163, 204), 0 0 25px #0073e6, 0 0 30px #50769c, 0 0 35px #17416b;
+	border-bottom: 2px solid white;
 }

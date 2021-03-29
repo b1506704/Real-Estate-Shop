@@ -7,8 +7,7 @@ import './CreditPage.css';
 const CreditPage = ({close}) => {
     const [creditInfo, setCreditInfo] = useState({
         creditID: '',
-        creditName: '',
-        creditValue: 0
+        creditBank: ''
     });
     const dispatch = useDispatch();
     const modalRef = useRef();
@@ -24,64 +23,49 @@ const CreditPage = ({close}) => {
           inline: "nearest"
         });
       };
-    const creName = ["Viettel","Mobifone","Vinaphone"];
-    const creValue = [20000, 50000, 100000];
-    const [selectedCreName, setSelectedCreName] = useState(creName[0]);
-    const [selectedCreValue, setSelectedCreValue] = useState(creValue[0]);
+    const creBank = ["BIDV","Agribank","Sacombank"];
+    const [selectedCreBank, setSelectedCreBank] = useState(creBank[0]);
 
-    const onCreNameChange = (e) => {
+    const onCreBankChange = (e) => {
         const value = e.target.value;
-        setSelectedCreName(creName.find((e) => e === value));
+        setSelectedCreBank(creBank.find((e) => e === value));
     }
-    const onCreValueChange = (e) => {
-        const value = parseInt(e.target.value);
-        setSelectedCreValue(creValue.find((e) => e === value));
-    }
-
+    
     useEffect(() => {
         dispatch(addCredit(creditInfo));
     },[creditInfo, setCreditInfo]);
 
     
 
-    const handleAddCredit = () => {
+    const handleSaveCredit = () => {
         //
     }
     return(
         <div className="credit_container drop_shadow">
             <div ref={modalRef} className="scroll_position_holder"></div>
-            <h1>Nạp thẻ</h1>
+            <h1>Thông tin thẻ</h1>
             <form onSubmit={(e) => {
                     e.preventDefault();
-                    setCreditInfo({creditID: e.target.ma_the.value, creditName: selectedCreName, creditValue: selectedCreValue});
+                    setCreditInfo({creditID: e.target.ma_the.value, creditBank: selectedCreBank});
                 }}>
                 <div>
                     <label>Mã thẻ:</label>
                     <input type="text" autoFocus={true} name="ma_the"></input>
                 </div>
                 <div>
-                    <label>Loại thẻ:</label>
-                    <select value={selectedCreName} onChange={onCreNameChange}>
-                        {creName.map((item, key) => (
+                    <label>Ngân hàng:</label>
+                    <select value={selectedCreBank} onChange={onCreBankChange}>
+                        {creBank.map((item, key) => (
                             <option value={item} key={key}>
                                 {item}
                             </option>
                         ))}
                     </select>
                 </div>
-                <div>
-                    <label>Mệnh giá:</label>
-                    <select value={selectedCreValue} onChange={onCreValueChange}>
-                        {creValue.map((item, key) => (
-                            <option value={item} key={key}>
-                                {item} VND
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                
                 <div className="button_container">
-                    <input type="submit" className="drop_shadow neon_effect" value="Nạp tiền" onClick={handleAddCredit}></input>
-                    <input type="button" className="drop_shadow neon_effect" value="Thoát" onClick={close}></input>
+                    <input type="submit" className="drop_shadow" value="Lưu" onClick={handleSaveCredit}></input>
+                    <input type="button" className="drop_shadow" value="Thoát" onClick={close}></input>
                 </div>
             </form>
             

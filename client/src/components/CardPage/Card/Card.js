@@ -1,30 +1,30 @@
 import {React, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {buyAccount, filterAccount} from '../../../actions/user_actions';
+import {buyHouse, filterHouse} from '../../../actions/user_actions';
 import './Card.css';
-import utaha from '../../../assets/imgs/utaha_01.jpg'; 
+import exampleImg from '../../../assets/imgs/sample.jpg'; 
 
-//id: id của tài khoản game 
-//name: tên của danh mục game
-//price: giá của tài khoản game
-//type: kiểu của Card là tài khoản game hay danh mục game
+//id: id của nhà 
+//name: tên của loại game
+//price: giá của nhà
+//type: kiểu của Card là nhà hay loại nhà
 //mode: Card thuộc trang User hay trang Admin
-//isBought: tình trạng đã bán hay chưa của tài khoản
-//accNum: số tài khoản game hiện có
-//sellNum: số tài khoản game đã bán
-const Card = ({account, category, type, mode}) => {
+//isBought: tình trạng đã bán hay chưa của nhà
+//accNum: số nhà hiện có
+//sellNum: số nhà đã bán
+const Card = ({house, category, type, mode}) => {
     const dispatch = useDispatch();
     const [isEdit, setIsEdit] =useState(false);
     
     const onCardSelect = () => {
       if (type === "acc") {
-        dispatch(buyAccount(account));
+        dispatch(buyHouse(house));
         // import modal thông báo
         
         //
       } else {
-        dispatch(filterAccount(category.name));
+        dispatch(filterHouse(category.name));
       }
     }
     const onCardEdit = () => {
@@ -32,44 +32,44 @@ const Card = ({account, category, type, mode}) => {
     }
     return (
       <div className="card_detail drop_shadow">
-        <div className="title_bar drop_shadow">
-          { type === "acc" ? account.id : category.name }            
+        <div className="title_bar drop_shadow neon_effect">
+          { type === "acc" ? house.id : category.name }            
         </div>
         { 
           type === "acc" 
           ? <div className="acc_info">
-              <div> Game: </div>
-              <div> Giá: {account.price} VND </div>
+              <div> Loại nhà: </div>
+              <div> Giá: {house.price} Tỷ VND </div>
               {
                 mode === "edit"
                 ? <div> 
-                    <div>Tình trạng: {account.isBought ? "Đã bán" : "Chưa bán"}</div>
-                    <div>Người mua: {account.accOwner}</div>
+                    <div>Người mua: {house.accOwner}</div>
+                    <div>Tình trạng: {house.isBought ? "Đã bán" : "Chưa bán"}</div>
                   </div>
                 : null
               }
-              <div> Thuộc tính 1: </div>
-              <div> Thuộc tính 2: </div>
-              <div> Thuộc tính 3: </div>
-              <div> Thuộc tính 4: </div>
+              <div> Diện tích: </div>
+              <div> Mặt tiền: </div>
+              <div> Hướng: </div>
+              <div> Vị trí: </div>
               
             </div>
           : <div className="acc_info">
-              <div> Số tài khoản hiện có: {category.accNum}</div>
+              <div> Số lượng: {category.houseNum}</div>
               <div> Đã bán: {category.sellNum}</div>
             </div>   
         }
         {
           mode === "view"
-          ?  <button type="button" className="price_button drop_shadow" onClick={onCardSelect}>
-               {type === "acc" ? "Mua" : "Duyệt"}
+          ?  <button type="button" className="price_button drop_shadow neon_effect" onClick={onCardSelect}>
+               {type === "acc" ? <>&#x1F6D2;</> : <>&#x1F50D;</>}
             </button>
-          : <button type="button" className="price_button drop_shadow" onClick={onCardEdit}>
-              Sửa          
+          : <button type="button" className="price_button drop_shadow neon_effect" onClick={onCardEdit}>
+              &#x270e;         
             </button>
         }
         <div className="image_container">
-          <img className="image" alt="Loading..." src={utaha}/>
+          <img className="image" alt="Loading..." src={exampleImg}/>
         </div>
       </div>
     );

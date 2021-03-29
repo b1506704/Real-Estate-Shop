@@ -57,8 +57,8 @@ const RegisterPage = ({close}) => {
                     </input>
                 </div>
                 <div className="button_container">
-                    <input type="submit" className="drop_shadow neon_effect" value="Đăng ký" onClick={handleLogin}></input>
-                    <input type="button" className="drop_shadow neon_effect" value="Thoát" onClick={close}></input>
+                    <input type="submit" className="drop_shadow" value="OK" onClick={handleLogin}></input>
+                    <input type="button" className="drop_shadow" value="Thoát" onClick={close}></input>
                 </div>
             </form>
         </div>

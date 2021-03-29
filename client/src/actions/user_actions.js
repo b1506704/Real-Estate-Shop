@@ -2,18 +2,15 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   ADD_CREDIT,
-  BUY_ACCOUNT,
-  FILTER_ACCOUNT,
-  AUTH_USER,
-  LOGOUT_USER,
-  ON_SUCCESS_BUY_USER
+  BUY_HOUSE,
+  FILTER_HOUSE,
+  ON_BUY_HOUSE
 } from '../constants/actionTypes';
 
 import * as api from '../api/index.js';
 
 export const login = (userInfo) => async (dispatch) => {
   try {
-    // const { data } = await api.createUser(userInfo);
     dispatch({ type: LOGIN_USER, payload: userInfo});
     
   } catch (error) {
@@ -22,7 +19,6 @@ export const login = (userInfo) => async (dispatch) => {
 };
 export const register = (userInfo) => async (dispatch) => {
   try {
-    // gửi data lên server
     const { data } = await api.createUser(userInfo);
     dispatch({ type: REGISTER_USER, payload: data});
   } catch (error) {
@@ -36,16 +32,16 @@ export const addCredit = (creditInfo) => async (dispatch) => {
     console.log(error.message);
   }
 };
-export const buyAccount = (accInfo) => async (dispatch) => {
+export const buyHouse = (houseInfo) => async (dispatch) => {
   try {
-    dispatch({ type: BUY_ACCOUNT, payload: accInfo});
+    dispatch({ type: BUY_HOUSE, payload: houseInfo});
   } catch (error) {
     console.log(error.message);
   }
 };
-export const filterAccount = (categoryName) => async (dispatch) => {
+export const filterHouse = (filterName) => async (dispatch) => {
   try {
-    dispatch({ type: FILTER_ACCOUNT, payload: categoryName});
+    dispatch({ type: FILTER_HOUSE, payload: filterName});
   } catch (error) {
     console.log(error.message);
   }

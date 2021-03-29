@@ -5,30 +5,30 @@ import './CardPage.css';
 
 const CardPage = ({context}) => {
     //dữ liệu tạm, chưa kết nối db
-    const [acc, setAcc] = useState([
-        {id: '#01',  price: 15000, isBought: false, accOwner:'test' },
-        {id: '#02', price: 35000, isBought: true, accOwner:'test2'},
-        {id: '#03', price: 45000, isBought: false, accOwner:'test3'},
-        {id: '#04', price: 110000, isBought: false, accOwner:'test'},
-        {id: '#05', price: 700000, isBought: true, accOwner:'test4'},
-        {id: '#06', price: 50000, isBought: false, accOwner:'test'},
-        {id: '#07', price: 69000, isBought: true, accOwner:'test'},
-        {id: '#08', price: 365000, isBought: false, accOwner:'test2'},
+    const [house, setAcc] = useState([
+        {id: '#A33',  price: 1.5, isBought: false, houseOwner:'test' },
+        {id: '#B02', price: 7, isBought: true, houseOwner:'test2'},
+        {id: '#C03', price: 9, isBought: false, houseOwner:'test3'},
+        {id: '#D04', price: 2.4, isBought: false, houseOwner:'test'},
+        {id: '#E05', price: 3.2, isBought: true, houseOwner:'test4'},
+        {id: '#F06', price: 3.5, isBought: false, houseOwner:'test'},
+        {id: '#G07', price: 1, isBought: true, houseOwner:'test'},
+        {id: '#H08', price: 1.7, isBought: false, houseOwner:'test2'},
     ]);
     const [category, setCategory] = useState([
-        {name: '#Liên Minh Huyền Thoại', accNum: 25, sellNum: 10},
-        {name: '#Free Fire', accNum: 15, sellNum: 5},
-        {name: '#Dota2', accNum: 5, sellNum: 1}]);
+        {name: 'Chung cư', houseNum: 25, sellNum: 10},
+        {name: 'Biệt thự', houseNum: 15, sellNum: 5},
+        {name: 'Căn hộ cho thuê', houseNum: 5, sellNum: 1}]);
     
     switch (context) {
         case "list":
             return(
                 <div className="card_page">
-                    <p> <b>Tài khoản game</b> </p>
+                    <p> <b>Danh sách nhà bán</b> </p>
                     <div className="card_container">
                         {
-                            acc.map ((item,key) => 
-                            (<Card key={key} account={item} type={"acc"} mode={"view"}/>))
+                            house.map ((item,key) => 
+                            (<Card key={key} house={item} type={"acc"} mode={"view"}/>))
                         }
                     </div>
                 </div>
@@ -36,7 +36,7 @@ const CardPage = ({context}) => {
         case "category":
             return(
                 <div className="card_page">
-                    <p> <b>Danh mục game</b> </p>
+                    <p> <b>Loại nhà bán</b> </p>
                     <div className="card_container">
                         {
                             category.map ((item,key) => 
@@ -48,8 +48,8 @@ const CardPage = ({context}) => {
         case "edit_category":
             return(
                 <div className="card_page">
-                    <p> <b>Quản lý danh mục game</b> 
-                        <button type="button" className="add_button drop_shadow"> Thêm </button>
+                    <p> <b>Quản lý loại nhà</b> 
+                        <button type="button" className="add_button drop_shadow"> &#x2b; </button>
                     </p>
                     <div className="card_container">
                         {
@@ -62,13 +62,13 @@ const CardPage = ({context}) => {
         case "edit_list":
             return(
                 <div className="card_page">
-                    <p> <b>Quản lý tài khoản game</b> 
-                        <button type="button" className="add_button drop_shadow"> Thêm </button>
+                    <p> <b>Quản lý nhà</b> 
+                        <button type="button" className="add_button drop_shadow"> &#x2b; </button>
                     </p>
                     <div className="card_container">
                         {
-                            acc.map ((item,key) => 
-                            (<Card key={key} account={item} type={"acc"} mode={"edit"}/>))
+                            house.map ((item,key) => 
+                            (<Card key={key} house={item} type={"acc"} mode={"edit"}/>))
                         }
                     </div>
                 </div>

@@ -1,16 +1,16 @@
-.credit_container {
+.bank_container {
     height: 350px;
     width: 450px;
     background-color: rgba(255, 255, 255, 0.753);
     border-radius: 15px;
  }
- .credit_container h1 {
+ .bank_container h1 {
      text-align: center;
      width: 100%;
      margin-bottom: 25px;
      margin-top: 25px;
  }
- .credit_container div {
+ .bank_container div {
      display: flex;
      align-items: center;
      justify-content: space-between;
@@ -19,11 +19,11 @@
      width: 100%;
      margin-bottom: 25px;
  }
- .credit_container div label {
+ .bank_container div label {
      font-size: 22px;
      font-weight: bold;
  }
- .credit_container input[type='text'], .credit_container select {
+ .bank_container input[type='text'], .bank_container select {
      color: rgb(2, 2, 2);
      font-size: 21px;
      font-weight: bold;
@@ -33,7 +33,7 @@
      background-color: rgba(233, 233, 216, 0.6);
      border-radius: 5px;
  }
-.credit_container input[type=submit], .credit_container input[type=button] {
+.bank_container input[type=submit], .bank_container input[type=button] {
     height: 80px;
     width: 80px;
     font-size: 20px;
@@ -50,11 +50,11 @@
      align-items: center;
      margin: 0;
  }
- .credit_container input[type=submit]:hover, .credit_container input[type=button]:hover {
+ .bank_container input[type=submit]:hover, .bank_container input[type=button]:hover {
     transform: scale(1.05);
  }
  
- .credit_container .scroll_position_holder {
+ .bank_container .scroll_position_holder {
     position: relative;
     top: -25vh;
 }

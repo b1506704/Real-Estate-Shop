@@ -22,10 +22,6 @@ const LoginPage = ({close}) => {
         scrollToModal();
     });
     
-    const handleLogin = () => {
-        // console.log(`${userInfo.userName} ${userInfo.passWord}`);
-    }
-
     const scrollToModal = () => {
         modalRef.current.scrollIntoView({
           behavior: "smooth",
@@ -50,8 +46,8 @@ const LoginPage = ({close}) => {
                     <input type="password" name="password"></input>
                 </div>
                 <div className="button_container">
-                    <input type="submit" className="drop_shadow" value="OK" onClick={handleLogin}></input>
-                    <input type="button" className="drop_shadow" value="Thoát" onClick={close}></input>
+                    <input type="submit" className="drop_shadow neon_effect" value="OK"></input>
+                    <input type="button" className="drop_shadow neon_effect" value="Thoát" onClick={close}></input>
                 </div>
             </form>
         </div>

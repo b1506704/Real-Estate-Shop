@@ -1,16 +1,20 @@
 import { React, useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {addCredit} from '../../actions/user_actions';
-import './CreditPage.css';
+import {addBank, getUser} from '../../actions/user_actions';
+import './BankPage.css';
 
-const CreditPage = ({close}) => {
-    const [creditInfo, setCreditInfo] = useState({
-        creditID: '',
-        creditBank: ''
-    });
+const BankPage = ({close}) => {
     const dispatch = useDispatch();
     const modalRef = useRef();
+
+    const bankName = ["Agribank","BIDV","Sacombank","Vietcombank"];
+    const [selectedCreName, setSelectedCreName] = useState(bankName[0]);
+    const [bankInfo, setBankInfo] = useState({
+        id: '',
+        provider: ''
+    });
+    const currentUserName = useSelector((state) => state.user_reducer.login.userName);
     
     useEffect(() => {
         scrollToModal();
@@ -23,30 +27,27 @@ const CreditPage = ({close}) => {
           inline: "nearest"
         });
       };
-    const creBank = ["BIDV","Agribank","Sacombank"];
-    const [selectedCreBank, setSelectedCreBank] = useState(creBank[0]);
 
-    const onCreBankChange = (e) => {
-        const value = e.target.value;
-        setSelectedCreBank(creBank.find((e) => e === value));
+    const onCreNameChange = (e) => {
+        const name = e.target.value;
+        setSelectedCreName(bankName.find((e) => e === name));
     }
-    
+
     useEffect(() => {
-        dispatch(addCredit(creditInfo));
-    },[creditInfo, setCreditInfo]);
+        if (bankInfo.id != '') {
+            dispatch(addBank(currentUserName, bankInfo))
+            .then(() => dispatch(getUser(currentUserName)));
+            
+        }
+    },[bankInfo]);
 
-    
-
-    const handleSaveCredit = () => {
-        //
-    }
     return(
-        <div className="credit_container drop_shadow">
+        <div className="bank_container shadow">
             <div ref={modalRef} className="scroll_position_holder"></div>
             <h1>Thông tin thẻ</h1>
             <form onSubmit={(e) => {
                     e.preventDefault();
-                    setCreditInfo({creditID: e.target.ma_the.value, creditBank: selectedCreBank});
+                    setBankInfo({id: e.target.ma_the.value, provider: selectedCreName});
                 }}>
                 <div>
                     <label>Mã thẻ:</label>
@@ -54,8 +55,8 @@ const CreditPage = ({close}) => {
                 </div>
                 <div>
                     <label>Ngân hàng:</label>
-                    <select value={selectedCreBank} onChange={onCreBankChange}>
-                        {creBank.map((item, key) => (
+                    <select value={selectedCreName} onChange={onCreNameChange}>
+                        {bankName.map((item, key) => (
                             <option value={item} key={key}>
                                 {item}
                             </option>
@@ -64,7 +65,7 @@ const CreditPage = ({close}) => {
                 </div>
                 
                 <div className="button_container">
-                    <input type="submit" className="drop_shadow" value="Lưu" onClick={handleSaveCredit}></input>
+                    <input type="submit" className="drop_shadow" value="Lưu"></input>
                     <input type="button" className="drop_shadow" value="Thoát" onClick={close}></input>
                 </div>
             </form>
@@ -72,4 +73,4 @@ const CreditPage = ({close}) => {
         </div>
     );
 }
-export default CreditPage;
+export default BankPage;

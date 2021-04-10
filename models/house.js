@@ -1,16 +1,25 @@
 import mongoose from 'mongoose';
-
 const houseSchema = mongoose.Schema({
-    id: String,
+    id: {
+        type: String,
+        unique: true
+    },
     category: String,
     imgUrl: String,
-    price: Number,
-    isBought: Boolean,
-    accOwner: String,
-    location: String,
+    price: {
+        type: Number,
+        min: 0
+    },
+    isBought: {
+        type:Boolean,
+        default: false,
+    },
+    houseOwner: String,
+    houseSeller: String,
     area: Number,
+    front: Number,
     direction: String,
-    frontArea: String
+    address: String
 });
 
 var House = mongoose.model('House', houseSchema);

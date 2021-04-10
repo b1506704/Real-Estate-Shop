@@ -1,34 +1,100 @@
-import {React, useState} from 'react';
+import {React, useRef} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Card from './Card/Card';
+import LoadingContainer from '../../utils/LoadingContainer/LoadingContainer';
+import {createHouse, createBank, createCategory, fetchCategory, fetchBank, fetchHouse, setNotification, filterHouseByPrice } from '../../actions/user_actions';
+import random from '../../utils/RandomNumber';
 import './CardPage.css';
 
 const CardPage = ({context}) => {
-    //dữ liệu tạm, chưa kết nối db
-    const [house, setAcc] = useState([
-        {id: '#A33',  price: 1.5, isBought: false, houseOwner:'test' },
-        {id: '#B02', price: 7, isBought: true, houseOwner:'test2'},
-        {id: '#C03', price: 9, isBought: false, houseOwner:'test3'},
-        {id: '#D04', price: 2.4, isBought: false, houseOwner:'test'},
-        {id: '#E05', price: 3.2, isBought: true, houseOwner:'test4'},
-        {id: '#F06', price: 3.5, isBought: false, houseOwner:'test'},
-        {id: '#G07', price: 1, isBought: true, houseOwner:'test'},
-        {id: '#H08', price: 1.7, isBought: false, houseOwner:'test2'},
-    ]);
-    const [category, setCategory] = useState([
-        {name: 'Chung cư', houseNum: 25, sellNum: 10},
-        {name: 'Biệt thự', houseNum: 15, sellNum: 5},
-        {name: 'Căn hộ cho thuê', houseNum: 5, sellNum: 1}]);
-    
+    const dispatch = useDispatch();
+    const houseList = useSelector((state) => state.user_reducer.houseList);
+    const bankList = useSelector((state) => state.user_reducer.bankList);
+    const categoryList = useSelector((state) => state.user_reducer.categoryList);
+    const bankProvider = ["Agribank","BIDV","Sacombank","Vietcombank"];   
+    const bankValue = [2, 5, 10, 20, 50, 100];   
+    const searchInput = useRef(null);
+
+    const addHouse = () => {
+        dispatch(
+            createHouse(
+                {
+                    id: random(1,2000),  
+                    price: random(1,200),
+                    category: categoryList !=null && categoryList.length!= 0 ? categoryList[random(0,  categoryList.length - 1)].name : null,
+                    imgUrl: null,
+                    isBought: false, 
+                    houseSeller: 'admin',
+                    area: random(1,1000),
+                    front: random(1,1000),
+                    direction: 'Hướng lộ',
+                    address: 'ĐH Thủ Dàu Một'
+                }
+            )
+        );
+    }
+    const addBank = () => {
+        dispatch(createBank(
+            {
+                id: random(1,2000),
+                provider: bankProvider[random(0, bankProvider.length-1)],
+                value: bankValue[random(0, bankValue.length-1)]
+            }
+        ));
+    }
+    const addCategory = () => {
+        dispatch(createCategory(
+            {
+                name: random(1,2000),
+                imgUrl: null,
+                houseNum: 0,
+                sellNum: 0
+            }));
+    }
+
+    const loadCategory = () => {
+        dispatch(fetchCategory())
+        .then(() => dispatch(setNotification("Làm mới thành công")));
+    }
+
+    const loadBank = () => {
+        dispatch(fetchBank())
+        .then(() => dispatch(setNotification("Làm mới thành công")));
+    }
+
+    const loadHouse = () => {
+        dispatch(fetchHouse())
+        .then(() => dispatch(setNotification("Làm mới thành công")));
+    }
+
+    const searchByPrice = (e) => {
+        e.preventDefault();
+        const price = searchInput.current.value;
+        if (price.trim() === '') {
+            dispatch(setNotification(`Vui lòng nhập giá tiền`));
+        } else {
+            dispatch(filterHouseByPrice(price));
+        }
+    }
+
     switch (context) {
         case "list":
             return(
                 <div className="card_page">
-                    <p> <b>Danh sách nhà bán</b> </p>
+                    <div className="card_header"> <b>Nhà Bán ({houseList ? houseList.length : 0})</b> 
+                        <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadHouse}> Làm Mới  </button>
+                        <form onSubmit={(e) => searchByPrice(e)}>
+                            <input type="text" ref={searchInput} className="shadow" placeholder="Tìm theo giá"></input>
+                            <input type="submit" className="shadow"></input>
+                        </form>
+                    </div>
                     <div className="card_container">
                         {
-                            house.map ((item,key) => 
-                            (<Card key={key} house={item} type={"acc"} mode={"view"}/>))
+                            houseList != null && houseList.length != 0? 
+                            houseList.map ((item,key) => 
+                            (<Card key={key} house={item} type={"house"} mode={"view"}/>))
+                            : (<LoadingContainer style={'spinner'}/>)
                         }
                     </div>
                 </div>
@@ -36,11 +102,16 @@ const CardPage = ({context}) => {
         case "category":
             return(
                 <div className="card_page">
-                    <p> <b>Loại nhà bán</b> </p>
+                    <div className="card_header"> <b> Loại nhà ({categoryList ? categoryList.length : 0})</b> 
+                        <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadCategory}> Làm Mới  </button>
+                    </div>
+
                     <div className="card_container">
                         {
-                            category.map ((item,key) => 
+                            categoryList != null && categoryList.length != 0 ? 
+                            categoryList.map ((item,key) => 
                             (<Card key={key} category={item} type={"category"} mode={"view"}/>))
+                            : (<LoadingContainer style={'spinner'}/>)
                         }
                     </div>
                 </div>
@@ -48,13 +119,16 @@ const CardPage = ({context}) => {
         case "edit_category":
             return(
                 <div className="card_page">
-                    <p> <b>Quản lý loại nhà</b> 
-                        <button type="button" className="add_button drop_shadow"> &#x2b; </button>
-                    </p>
+                    <div className="card_header"> <b>Quản lý loại nhà ({categoryList ? categoryList.length : 0})</b> 
+                        <button type="button" className="card_menu_button shadow" onClick={addCategory}> Thêm </button>
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadCategory}> Tải Mới  </button>
+                    </div>
                     <div className="card_container">
                         {
-                            category.map ((item,key) => 
+                            categoryList != null && categoryList.length != 0 ? 
+                            categoryList.map ((item,key) => 
                             (<Card key={key} category={item} type={"category"} mode={"edit"}/>))
+                            : (<LoadingContainer style={'spinner'}/>)
                         }
                     </div>
                 </div>
@@ -62,19 +136,39 @@ const CardPage = ({context}) => {
         case "edit_list":
             return(
                 <div className="card_page">
-                    <p> <b>Quản lý nhà</b> 
-                        <button type="button" className="add_button drop_shadow"> &#x2b; </button>
-                    </p>
+                    <div className="card_header"> <b>Quản lý nhà bán ({houseList ? houseList.length : 0})</b> 
+                        <button type="button" className="card_menu_button shadow" onClick={addHouse}> Thêm </button>
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadHouse}> Làm Mới  </button>
+                    </div>
                     <div className="card_container">
                         {
-                            house.map ((item,key) => 
-                            (<Card key={key} house={item} type={"acc"} mode={"edit"}/>))
+                            houseList != null && houseList.length != 0?
+                            houseList.map ((item,key) => 
+                            (<Card key={key} house={item} type={"house"} mode={"edit"}/>))
+                            : <LoadingContainer style={'spinner'}/>
                         }
                     </div>
                 </div>
-            );             
+            );
+        case "edit_card":
+            return(
+                <div className="card_page">
+                    <div className="card_header"> <b>Quản lý tài khoản ngân hàng ({bankList ? bankList.length : 0})</b> 
+                        <button type="button" className="card_menu_button shadow" onClick={addBank}> Thêm </button>
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadBank}> Làm Mới  </button>
+                    </div>
+                    <div className="card_container">
+                        {
+                            bankList != null && bankList.length != 0 ?
+                            bankList.map ((item,key) => 
+                            (<Card key={key} bank={item} type={"bank"} mode={"edit"}/>))
+                            : <LoadingContainer style={'spinner'}/>
+                        }
+                    </div>
+                </div>
+            );                
         default:
-            return (<div> Loading... </div>);
+            return (<LoadingContainer style={'dot'}/>);
     }
 }
 export default CardPage;

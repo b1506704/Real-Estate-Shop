@@ -8,12 +8,13 @@ const RegisterPage = ({close}) => {
     const dispatch = useDispatch();
     const [userInfo, setUserInfo] = useState({
         userName: '',
-        passWord: ''
+        passWord: '',
+        email: ''
     });
     const modalRef = useRef();
 
     useEffect(() => {
-        if (userInfo.userName && userInfo.passWord) {
+        if (userInfo.userName && userInfo.passWord && userInfo.email) {
             dispatch(register(userInfo));
         }
     },[userInfo, setUserInfo]);
@@ -21,10 +22,7 @@ const RegisterPage = ({close}) => {
     useEffect(() => {
         scrollToModal();
     });
-    const handleLogin = () => {
-        // console.log(`${userInfo.userName} ${userInfo.passWord}`);
-    }
-
+    
     const scrollToModal = () => {
         modalRef.current.scrollIntoView({
           behavior: "smooth",
@@ -32,33 +30,30 @@ const RegisterPage = ({close}) => {
           inline: "nearest"
         });
       };
+
     return(
-        <div className="login_container drop_shadow">
+        <div className="register_container shadow">
             <div ref={modalRef} className="scroll_position_holder"></div>
             <h1>Đăng ký</h1>
             <form onSubmit={(e) => {
                     e.preventDefault();
-                    setUserInfo({userName: e.target.username.value, passWord:e.target.password.value});
+                    setUserInfo({userName: e.target.username.value, passWord:e.target.password.value, email: e.target.email.value});
                 }}>
                 <div>
                     <label>Tên đăng ký:</label>
-                    <input type="text" name="username" 
-                    onSubmit= {(e) => {
-                        setUserInfo({...userInfo, userName: e.target.value});}
-                    }>
-                    </input>
+                    <input type="text" autoFocus={true} name="username" placeholder="<=8 ký tự"></input>
                 </div>
                 <div>
-                    <label>Mật khẩu:</label>
-                    <input type="password" name="password" 
-                    onSubmit= {(e) => {
-                        setUserInfo({...userInfo, passWord: e.target.value});
-                    }}>
-                    </input>
+                    <label>Mật khẩu </label>
+                     <input type="password" name="password" placeholder="<=12 ký tự"></input>
+                </div>
+                <div>
+                    <label>Email:</label>
+                    <input type="text" name="email"></input>
                 </div>
                 <div className="button_container">
-                    <input type="submit" className="drop_shadow" value="OK" onClick={handleLogin}></input>
-                    <input type="button" className="drop_shadow" value="Thoát" onClick={close}></input>
+                    <input type="submit" className="shadow neon" value="Đăng ký"></input>
+                    <input type="button" className="shadow neon" value="Thoát" onClick={close}></input>
                 </div>
             </form>
         </div>

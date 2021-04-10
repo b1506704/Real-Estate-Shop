@@ -1,33 +1,36 @@
 import { React, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from '../Modal/Modal';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import CreditPage from '../CreditPage/CreditPage';
-import {login} from '../../actions/user_actions';
+import BankPage from '../BankPage/BankPage';
+import Notification from './Notification/Notification';
+import GoogleMap from './GoogleMap/GoogleMap';
+import UserInfo from '../UserPage/UserInfo/UserInfo';
+import {logout, setNotification} from '../../actions/user_actions';
 import './NavBar.css';
 
-const NavBar = ({userMode, userName, balance}) => {
+const NavBar = ({userMode, userName}) => {
     const dispatch = useDispatch();
     const modal = useRef(null);
     const [isLoginPageOpen, setIsLoginPageOpen] = useState(false);
     const [isCreditPageOpen, setIsCreditPageOpen] = useState(false);
     const [isRegisterPageOpen, setIsRegisterPageOpen] = useState(false);
-    
+    const currentUserInfo = useSelector ((state) => state.user_reducer.login);
+    const currentNotif = useSelector((state) => state.user_reducer.notif);
     return(
         <header>
             <div className="content-wrapper">
-                <h1>Real Estate Shop</h1>
+                <h1>Real Estate Shop {userMode === "admin" ? "Panel" : null}</h1>
                 <nav>
                     {
                         userMode === "admin" || userMode === "user" 
                         ? null 
                         : <a onClick={() => {
-                            dispatch(login('', ''));
                             modal.current.close();
                         }}>
-                            Trang chủ</a>
+                            Trang Chủ</a>
                     }
                     {
                         userMode != "user" 
@@ -42,10 +45,7 @@ const NavBar = ({userMode, userName, balance}) => {
                     }
                     {
                         userMode === "user" 
-                        ? <>
-                        <a style={{color: "yellow"}}> | {userName} | </a>
-                        <a> Số dư: {balance} Tỷ </a>
-                        </>
+                        ? <a style={{color: "yellow"}}> | {userName} |</a>
                         : null
                     }
                     {
@@ -61,31 +61,36 @@ const NavBar = ({userMode, userName, balance}) => {
                             setIsLoginPageOpen(false);
                             modal.current.open();
                         }}>
-                            Đăng ký</a>
+                            Đăng Ký</a>
                         : null 
                     }
                     {
                         userMode === "admin" || userMode === "user" 
                         ? <a onClick={() => {
-                            dispatch(login('', ''));
+                            
+                            dispatch(logout(currentUserInfo))
+                            .then(() => dispatch(setNotification("Đăng xuất thành công")));
                             modal.current.close();
                             }}>
-                            Đăng xuất</a> 
+                            Đăng Xuất</a> 
                         : <a onClick={() => {
                             setIsLoginPageOpen(true);
                             setIsCreditPageOpen(false);
                             setIsRegisterPageOpen(false);
                             modal.current.open();
                         }}>
-                            Đăng nhập</a> 
+                            Đăng Nhập</a> 
                     }
                 </nav>
             </div>
             <Modal ref={modal}>
                 { isLoginPageOpen ? (<LoginPage close={() => modal.current.close()}/>) : null}
-                { isCreditPageOpen ? (<CreditPage close={() => modal.current.close()}/>) : null}
+                { isCreditPageOpen ? (<BankPage close={() => modal.current.close()}/>) : null}
                 { isRegisterPageOpen ? (<RegisterPage close={() => modal.current.close()}/>) : null}
             </Modal>
+            {currentNotif ? <Notification message={currentNotif}/> : null}
+            { userMode === "admin" ? null :<GoogleMap/>}
+            { userMode ? <UserInfo user={currentUserInfo}/> : null}
         </header>
     );
 }

@@ -1,17 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import NavBar from '../NavBar/NavBar';
 import HeadingTitle from '../HeadingTitle/HeadingTitle';
 import HouseCategory from '../HouseCategory/HouseCategory';
 import HouseList from '../HouseList/HouseList';
 import Footer from '../Footer/Footer';
-import './UserPage.css';
 
-const UserPage = ({userName, balance}) => {
+const UserPage = ({user}) => {
     return(
         <div>
-            <NavBar userName={userName} userMode="user" balance= {balance}/>
-            <HeadingTitle title={"Real Estate Shop"} subtitle={`Chào mừng ${userName} đến với Real Estate Shop`}/>
+            <NavBar userName={user.userName} userMode="user"/>
+            <HeadingTitle title={`Chào mừng ${user.userName} đến với sàn giao dịch`} subtitle={"Giao dịch uy tín, chất lượng"}/>
             <HouseCategory/>
             <HouseList/>
             <Footer/>

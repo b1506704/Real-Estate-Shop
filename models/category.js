@@ -1,10 +1,21 @@
 import mongoose from 'mongoose';
 
 const categorySchema = mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        unique: true
+    },
     imgUrl: String,
-    houseNum: Number,
-    sellNum: Number,
+    houseNum: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
+    sellNum: {
+        type: Number,
+        default: 0,
+        min: 0
+    },
 });
 
 var Category = mongoose.model('Category', categorySchema);

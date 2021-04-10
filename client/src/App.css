@@ -5,7 +5,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   outline: none;
-  font-family: Title;
+  font-family: Overall;
 }
 /* *:after,
 *:before {
@@ -13,21 +13,21 @@
 } */
 
 @font-face {
-	font-family: Title;
+	font-family: Overall;
 	src: url('./assets/fonts/SVN-Elle NovaC-Extra-Light.ttf');
 }
   
 @font-face {
-	font-family: Subtitle;
+	font-family: Detail;
 	src: url('./assets/fonts/UTM-Ericsson-Capital.ttf');
 }
 
 
 
-.drop_shadow {
+.shadow {
 	box-shadow: rgba(17, 16, 17, 0.56) 0px 22px 70px 4px;
 }
-.neon_effect {
+.neon {
 	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #9dd7e6, 0 0 20px rgb(123, 163, 204);
 }
 html {
@@ -43,33 +43,19 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	color: #2b2828;
+	color: #ffffff;
 	margin: 0;
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding-bottom: 100px; 
 }
 h1, h2, h3, h4, h5 {
-	color: #000000;
+	color: #f1dfdf;
 }
 .content-wrapper {
 	padding-left: 100px;
 	padding-right: 100px;
 	margin: 0 auto;
 }
-body::-webkit-scrollbar {
-	width: 8px;
-}
-   
-body::-webkit-scrollbar-track {
-	box-shadow: inset 0px 22px 70px 4px rgba(0,0,0,0.3);
-}
 
-body::-webkit-scrollbar-thumb {
-	background-color: rgba(90, 112, 116, 0.863);
-	border-radius: 15px;
-}
-body::-webkit-scrollbar-thumb:hover {
-	background-color: rgb(25, 49, 53);
-}
 

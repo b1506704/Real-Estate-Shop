@@ -1,0 +1,48 @@
+.notification_container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: -50vh;
+    left: -40vh;
+    height: 80px;
+    border-radius: 5px;
+    min-width: 250px;
+    opacity: 1;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: rgba(247, 239, 230, 0.486);
+    animation-name: popup ;
+    animation-duration: 1.5s;
+    animation-timing-function: linear;
+}
+
+.notification_container h2 {
+    color: rgb(10, 10, 10);
+}
+@keyframes popup {
+    0% {
+        opacity: 1;
+        transform: translateX(0vh);
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(35vh);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(40vh);
+    }
+    75% {
+        opacity: 1;
+        transform: translateX(40vh);
+    }
+    85% {
+        opacity: 0.8;
+        transform: translateX(40vh);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(40vh);
+    }
+}

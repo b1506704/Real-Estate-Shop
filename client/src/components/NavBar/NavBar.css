@@ -6,7 +6,7 @@ header {
 	background-color: rgba(179, 179, 166, 0.877);
 	box-shadow: rgba(150, 143, 143, 0.56) 0px 22px 70px 4px;
 	transition: all 0.5s ease-in-out;
-	overflow: hidden;
+	overflow: visible;
 	z-index: 999;
 }
 header:hover {

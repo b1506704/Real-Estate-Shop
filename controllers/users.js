@@ -90,7 +90,11 @@ export const buyHouse = async (req, res) => {
         const user = await User.findOne({userName: userName});
         const house = await House.findOne({id});
         const seller = await User.findOne({userName: house.houseSeller});
-        if (house.isBought === false && isValidPurchase(user.balance,house.price) && user.userName != seller.userName) {
+        const bank = await Bank.findOne({owner: user.userName});
+        if (house.isBought === false 
+            && isValidPurchase(user.balance,house.price)  
+            && user.userName != seller.userName
+            ) {
             const updatedHouse = await House.findOneAndUpdate({id: id},{isBought: true, houseOwner: userName}, {new: true});
             const updatedSeller = await User.findOneAndUpdate(
                 {userName: seller.userName},
@@ -98,14 +102,21 @@ export const buyHouse = async (req, res) => {
                     balance: seller.balance + updatedHouse.price,
                     $push: {houseSellList: updatedHouse.id},
                 },
-                {new: true});
+                {new: true}
+            );
             const updatedUser = await User.findOneAndUpdate(
                 {userName: userName},
                 {
                     balance: user.balance - updatedHouse.price,
                     $push: {houseOwnList: updatedHouse.id},
                 },
-                {new: true});
+                {new: true}
+            );
+            const updatedBank = await Bank.findOneAndUpdate(
+                {owner: bank.owner},
+                {value: bank.value - updatedHouse.price},
+                {new: true}
+            );
 
             res.status(200).json(updatedUser.balance);
         } else {

@@ -83,7 +83,7 @@ const CardPage = ({context}) => {
             return(
                 <div className="card_page">
                     <div className="card_header"> <b>Nhà Bán ({houseList ? houseList.length : 0})</b> 
-                        <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadHouse}> Làm Mới  </button>
+                        <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadHouse}></button>
                         <form onSubmit={(e) => searchByPrice(e)}>
                             <input type="text" ref={searchInput} className="shadow" placeholder="Tìm theo giá"></input>
                             <input type="submit" className="shadow"></input>
@@ -103,7 +103,7 @@ const CardPage = ({context}) => {
             return(
                 <div className="card_page">
                     <div className="card_header"> <b> Loại nhà ({categoryList ? categoryList.length : 0})</b> 
-                        <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadCategory}> Làm Mới  </button>
+                        <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadCategory}></button>
                     </div>
 
                     <div className="card_container">
@@ -120,8 +120,8 @@ const CardPage = ({context}) => {
             return(
                 <div className="card_page">
                     <div className="card_header"> <b>Quản lý loại nhà ({categoryList ? categoryList.length : 0})</b> 
-                        <button type="button" className="card_menu_button shadow" onClick={addCategory}> Thêm </button>
-                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadCategory}> Tải Mới  </button>
+                        <button type="button" className="card_menu_button add_button shadow" onClick={addCategory}></button>
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadCategory}></button>
                     </div>
                     <div className="card_container">
                         {
@@ -137,8 +137,8 @@ const CardPage = ({context}) => {
             return(
                 <div className="card_page">
                     <div className="card_header"> <b>Quản lý nhà bán ({houseList ? houseList.length : 0})</b> 
-                        <button type="button" className="card_menu_button shadow" onClick={addHouse}> Thêm </button>
-                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadHouse}> Làm Mới  </button>
+                        <button type="button" className="card_menu_button add_button shadow" onClick={addHouse}></button>
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadHouse}></button>
                     </div>
                     <div className="card_container">
                         {
@@ -154,8 +154,8 @@ const CardPage = ({context}) => {
             return(
                 <div className="card_page">
                     <div className="card_header"> <b>Quản lý tài khoản ngân hàng ({bankList ? bankList.length : 0})</b> 
-                        <button type="button" className="card_menu_button shadow" onClick={addBank}> Thêm </button>
-                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadBank}> Làm Mới  </button>
+                        <button type="button" className="card_menu_button add_button shadow" onClick={addBank}></button>
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadBank}></button>
                     </div>
                     <div className="card_container">
                         {

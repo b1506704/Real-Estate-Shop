@@ -18,7 +18,6 @@
 }
 .card_detail:hover {
   transform: translateY(-5px);
-  background: #00010288;
   box-shadow: 0 0 5px #fff, 0 0 10px #fff;
 }
 .card_detail .title_bar {
@@ -52,20 +51,31 @@
   position: absolute;
   opacity: 0.3;
   bottom: 3vh;
-  text-align: center;
-  border: transparent;
-  background: rgba(50, 50, 51, 0.63);
+  border-style: none;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: transparent;
   user-select: none;
   overflow: hidden;
-  height: 40px; 
-  color: rgb(255, 255, 255);
-  font-size: 25px;
+  height: 33px; 
   width: 100%;
   cursor: pointer;
   z-index: 2;
 }
 
+.browse_button {
+  background: url("../../../assets/imgs/filter.png");
+}
+.buy_button {
+  background: url("../../../assets/imgs/shopping-cart.png");
+}
 .edit_button {
+  background: url("../../../assets/imgs/pencil.png");
+  bottom: 23vh !important;
+}
+.save_button {
+  background: url("../../../assets/imgs/save.png");
   bottom: 23vh !important;
 }
 .base64_button {
@@ -78,23 +88,24 @@
   bottom: 38vh !important;
 }
 .delete_button {
+  background: url("../../../assets/imgs/trash-bin.png");
   bottom: 55vh !important;
 }
 .cancel_button {
+  background: url("../../../assets/imgs/cancel.png");
   bottom: 30vh !important;
 }
 
 .card_detail .card_button:hover {
   opacity: 1;
-  background: #00010288;
-  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  background-color: rgb(147, 194, 255);
 }
   
 .house_info {
   position: absolute;
   padding-top: 100px;
   padding-bottom: 15px;
-  color: rgb(8, 8, 8);
+  color: rgb(255, 255, 255);
   height: 250px;
   width: 100%;
   bottom: 0vh;

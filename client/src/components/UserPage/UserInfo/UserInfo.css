@@ -64,26 +64,35 @@
 .user_info_container div .image {
    height: 100%;
    border-radius: 5px;
-   
    width: 100%;
 }
-.user_info_container div button {
-    width: 100%;
+.user_info_container button {
     height: 50px;
+    width: 100%;
     margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.534);
-    color: rgb(252, 252, 252);
-    font-size: 20px;
+    border-style: none;
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+    color: transparent;
     transition: all 0.5s ease-in-out;
 }
-.user_info_container div button:hover {
-    background-color: rgba(22, 143, 241, 0.788);
+.user_info_container button .refresh_button {
+    background: url("../../../assets/imgs/refresh.png");
+}
+.user_info_container .upload_button {
+    background-size: contain !important;
+    background-position: center top !important;
+    background-repeat: no-repeat !important;
+    background: url("../../../assets/imgs/upload.png");
+}
+.user_info_container button:hover {
+    background-color: rgba(177, 195, 255, 0.288);
 }
 
 .user_info_container input, .user_info_container select {
     font-size: 18px;
     padding-left: 1vh;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(252, 249, 249, 0.541);
     width: 200px;
 }

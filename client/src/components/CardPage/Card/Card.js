@@ -111,10 +111,8 @@ const Card = ({house, category, bank, type, mode}) => {
           dispatch(updateCategory(category.name, updatedCategory))
           .then(() => setIsEditing(false));
       } else if (type === "bank") {
-          // todo: add owner
           const updatedBank = {
             provider: bankInputRef.providerRef.current.value,
-            owner: bankInputRef.ownerRef.current.value,
             value: bankInputRef.valueRef.current.value,
           };
           dispatch(updateBank(bank.id, updatedBank))
@@ -214,7 +212,6 @@ const Card = ({house, category, bank, type, mode}) => {
                             </select>)
                         }
                     </div>
-                    {/* Todo: get list of users */}
                     <div> Chủ sở hữu: &nbsp;
                         { isEditing === false ? bank.owner
                           : null
@@ -226,13 +223,17 @@ const Card = ({house, category, bank, type, mode}) => {
         }
         {
           mode === "view"
-          ?  <button type="button" className="card_button shadow" onClick={onCardSelect}>
-               {type === "house" ? "Mua" : "Duyệt"}
-            </button>
+          ? <>
+              {
+                type === "house" ? <button type="button" className="card_button buy_button shadow" onClick={onCardSelect}></button>   
+                : type === "category" ? <button type="button" className="card_button browse_button shadow" onClick={onCardSelect}></button>
+                : null   
+              } 
+            </>
           : <>
               { isEditing === false 
                 ? (<button type="button" className="card_button edit_button shadow" onClick={onCardEdit}>
-                    Sửa
+                    
                   </button>) 
                 : <>
                   { type === "bank" ? null : (<div className="card_button base64_button shadow">
@@ -240,10 +241,10 @@ const Card = ({house, category, bank, type, mode}) => {
                     <FileBase className="base64"  type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  
                   </div>)}
                   <button type="button" className="card_button cancel_button shadow" onClick={onCardCancel}>
-                    Hủy
+                    
                   </button>
-                  <button type="button" className="card_button edit_button shadow" onClick={onCardUpdate}>
-                    Lưu
+                  <button type="button" className="card_button save_button shadow" onClick={onCardUpdate}>
+                    
                   </button>
                   </>
               }

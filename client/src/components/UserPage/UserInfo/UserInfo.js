@@ -56,12 +56,12 @@ const UserInfo = () => {
             <h2 className="title"> { user ? user.userName : null} Panel </h2>
             <div className="info_panel">
                 <div> 
-                    <button type="button" className="shadow neon" onClick={refresh}> Làm mới </button>
+                    <button type="button" className="shadow refresh_button" onClick={refresh}></button>
                 </div>
                 
                 {currentLoginUser && currentLoginUser.isAdmin === true ?
                 <> 
-                <div style={{color: "yellow"}}> Thu nhập: { user ? user.balance : null} VND</div>
+                <div style={{color: "yellow"}}> Thu nhập: { user ? user.balance : null} Tỷ VND</div>
                 <div> Nhà đã bán được: &nbsp; {user ? JSON.stringify(user.houseSellList, user.houseSellList, 2) : null} </div> 
                 </>
                 : null}
@@ -99,14 +99,13 @@ const UserInfo = () => {
                             <input ref={houseInputRef.address} type="text"></input>
                         </div>
                         <div>
-                            Upload hình ảnh:
                             <FileBase className="base64"  type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  
                         </div>
                         <div>
                             <img className="image" alt="Chọn ảnh để upload" src={currentImg}/>
                         </div>
                         <div> 
-                            <button type="button" className="shadow neon" onClick={onHouseUpload}> Đăng tin </button>
+                            <button type="button" className="shadow upload_button" onClick={onHouseUpload}></button>
                         </div>
                     </>
                     : null

@@ -43,11 +43,13 @@ const App = () => {
     } else if (loginInfo === undefined || loginInfo === null){
         return(
             <div>
-                <NavBar/> 
-                <HeadingTitle title={title} subtitle={subTitle} />
-                <HouseCategory/>
-                <HouseList/>
-                <Footer/>
+                <NavBar/>
+                <main>
+                    <HeadingTitle title={title} subtitle={subTitle} />
+                    <HouseCategory/>
+                    <HouseList/>
+                    <Footer/>
+                </main>
             </div>
         );
     } else {

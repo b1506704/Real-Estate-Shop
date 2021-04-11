@@ -34,17 +34,17 @@ const RegisterPage = ({close}) => {
     return(
         <div className="register_container shadow">
             <div ref={modalRef} className="scroll_position_holder"></div>
-            <h1>Đăng ký</h1>
+            <h1>Đăng Ký</h1>
             <form onSubmit={(e) => {
                     e.preventDefault();
                     setUserInfo({userName: e.target.username.value, passWord:e.target.password.value, email: e.target.email.value});
                 }}>
                 <div>
-                    <label>Tên đăng ký:</label>
+                    <label>Tên Đăng Ký:</label>
                     <input type="text" autoFocus={true} name="username" placeholder="<=8 ký tự"></input>
                 </div>
                 <div>
-                    <label>Mật khẩu </label>
+                    <label>Mật Khẩu </label>
                      <input type="password" name="password" placeholder="<=12 ký tự"></input>
                 </div>
                 <div>

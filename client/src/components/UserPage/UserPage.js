@@ -10,10 +10,12 @@ const UserPage = ({user}) => {
     return(
         <div>
             <NavBar userName={user.userName} userMode="user"/>
-            <HeadingTitle title={`Chào mừng ${user.userName} đến với sàn giao dịch`} subtitle={"Giao dịch uy tín, chất lượng"}/>
-            <HouseCategory/>
-            <HouseList/>
-            <Footer/>
+            <main>
+                <HeadingTitle title={`Chào mừng ${user.userName} đến với sàn giao dịch`} subtitle={"Giao dịch uy tín, chất lượng"}/>
+                <HouseCategory/>
+                <HouseList/>
+                <Footer/>
+            </main>
         </div>
     );
 }

@@ -67,7 +67,7 @@ const CardPage = ({context}) => {
         dispatch(fetchHouse())
         .then(() => dispatch(setNotification("Làm mới thành công")));
     }
-
+    //check
     const searchByPrice = (e) => {
         e.preventDefault();
         const price = searchInput.current.value;
@@ -85,7 +85,7 @@ const CardPage = ({context}) => {
                     <div className="card_header"> <b>Nhà Bán ({houseList ? houseList.length : 0})</b> 
                         <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadHouse}></button>
                         <form onSubmit={(e) => searchByPrice(e)}>
-                            <input type="text" ref={searchInput} className="shadow" placeholder="Tìm theo giá"></input>
+                            <input type="number" ref={searchInput} className="shadow" placeholder="Tìm theo giá"></input>
                             <input type="submit" className="shadow"></input>
                         </form>
                     </div>
@@ -102,7 +102,7 @@ const CardPage = ({context}) => {
         case "category":
             return(
                 <div className="card_page">
-                    <div className="card_header"> <b> Loại nhà ({categoryList ? categoryList.length : 0})</b> 
+                    <div className="card_header"> <b> Loại Nhà ({categoryList ? categoryList.length : 0})</b> 
                         <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadCategory}></button>
                     </div>
 
@@ -119,7 +119,7 @@ const CardPage = ({context}) => {
         case "edit_category":
             return(
                 <div className="card_page">
-                    <div className="card_header"> <b>Quản lý loại nhà ({categoryList ? categoryList.length : 0})</b> 
+                    <div className="card_header"> <b>Quản Lý Loại Nhà ({categoryList ? categoryList.length : 0})</b> 
                         <button type="button" className="card_menu_button add_button shadow" onClick={addCategory}></button>
                         <button type="button" className="card_menu_button refresh_button shadow" onClick={loadCategory}></button>
                     </div>
@@ -136,7 +136,7 @@ const CardPage = ({context}) => {
         case "edit_list":
             return(
                 <div className="card_page">
-                    <div className="card_header"> <b>Quản lý nhà bán ({houseList ? houseList.length : 0})</b> 
+                    <div className="card_header"> <b>Quản Lý Nhà Bán ({houseList ? houseList.length : 0})</b> 
                         <button type="button" className="card_menu_button add_button shadow" onClick={addHouse}></button>
                         <button type="button" className="card_menu_button refresh_button shadow" onClick={loadHouse}></button>
                     </div>
@@ -153,7 +153,7 @@ const CardPage = ({context}) => {
         case "edit_card":
             return(
                 <div className="card_page">
-                    <div className="card_header"> <b>Quản lý tài khoản ngân hàng ({bankList ? bankList.length : 0})</b> 
+                    <div className="card_header"> <b>Quản Lý Tài Khoản Ngân Hàng ({bankList ? bankList.length : 0})</b> 
                         <button type="button" className="card_menu_button add_button shadow" onClick={addBank}></button>
                         <button type="button" className="card_menu_button refresh_button shadow" onClick={loadBank}></button>
                     </div>

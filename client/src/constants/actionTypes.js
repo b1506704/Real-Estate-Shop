@@ -24,3 +24,4 @@ export const FETCH_CATEGORY = 'fetch_category';
 export const UPDATE_CATEGORY = 'update_category';
 // notification actions
 export const SET_NOTIFICATION = 'set_notification';
+export const SHOW_USER_INFO = 'show_user_info';

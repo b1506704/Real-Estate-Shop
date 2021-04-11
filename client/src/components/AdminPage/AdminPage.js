@@ -12,11 +12,13 @@ const AdminPage = ({userName}) => {
     return(
         <div>
             <NavBar userName={userName} userMode="admin"/>
-            <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
-            <EditBankList/>
-            <EditHouseCategory/>
-            <EditHouseList/>
-            <Footer/>
+            <main>
+                <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                <EditBankList/>
+                <EditHouseCategory/>
+                <EditHouseList/>
+                <Footer/>
+            </main>
         </div>
     );
 }

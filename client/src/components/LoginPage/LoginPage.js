@@ -32,17 +32,17 @@ const LoginPage = ({close}) => {
     return(
         <div className="login_container drop_shadow">
             <div ref={modalRef} className="scroll_position_holder"></div>
-            <h1>Đăng nhập</h1>
+            <h1>Đăng Nhập</h1>
             <form onSubmit={(e) => {
                     e.preventDefault();
                     setUserInfo({userName: e.target.username.value, passWord:e.target.password.value});
                 }}>
                 <div>
-                    <label>Tên đăng nhập:</label>
+                    <label>Tên Đăng Nhập:</label>
                     <input type="text" autoFocus={true} name="username"></input>
                 </div>
                 <div>
-                    <label>Mật khẩu:</label>
+                    <label>Mật Khẩu:</label>
                     <input type="password" name="password"></input>
                 </div>
                 <div className="button_container">

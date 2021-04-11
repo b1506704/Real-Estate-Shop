@@ -6,8 +6,7 @@
   border: transparent;
   background: #b9c3ce71;
   user-select: none;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   min-height: 400px;
   width: 310px;
   border-radius: 10px;
@@ -139,7 +138,6 @@
   width: 100%; 
   user-select: none;
   -webkit-user-drag: none;
-}  
-::-webkit-scrollbar {
-	width: 0px;
 }
+
+

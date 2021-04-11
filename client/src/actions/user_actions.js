@@ -20,6 +20,7 @@ import {
   CREATE_CATEGORY,
   UPDATE_CATEGORY,
   SET_NOTIFICATION,
+  SHOW_USER_INFO
 } from '../constants/actionTypes';
 
 import * as api from '../api/index.js';
@@ -234,6 +235,14 @@ export const updateCategory = (name, categoryInfo) => async (dispatch) => {
 export const setNotification = (notification) => async (dispatch) => {
   try {
     dispatch({ type: SET_NOTIFICATION, payload: notification});
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const showMenu = (isShow) => async (dispatch) => {
+  try {
+    await dispatch({ type: SHOW_USER_INFO, payload: isShow});
   } catch (error) {
     console.log(error.message);
   }

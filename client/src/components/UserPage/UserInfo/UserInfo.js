@@ -53,7 +53,7 @@ const UserInfo = () => {
     return(
         <div className="user_info_container shadow">
             <h2 className="icon"> {"||"} </h2>
-            <h2 className="title"> { user ? user.userName : null} Panel </h2>
+            <h2 className="title"> Thông Tin Người Dùng { user ? user.userName : null} </h2>
             <div className="info_panel">
                 <div> 
                     <button type="button" className="shadow refresh_button" onClick={refresh}></button>
@@ -61,21 +61,33 @@ const UserInfo = () => {
                 
                 {currentLoginUser && currentLoginUser.isAdmin === true ?
                 <> 
-                <div style={{color: "yellow"}}> Thu nhập: { user ? user.balance : null} Tỷ VND</div>
-                <div> Nhà đã bán được: &nbsp; {user ? JSON.stringify(user.houseSellList, user.houseSellList, 2) : null} </div> 
+                <div style={{color: "yellow"}}> Thu Nhập: { user ? user.balance : null} Tỷ VND</div>
+                <div> Nhà Đã Bán Được: &nbsp; 
+                    {
+                        user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
+                    } 
+                </div> 
                 </>
                 : null}
                 
                 {currentLoginUser && currentLoginUser.isAdmin === false ?
                     <> 
-                        <div> Địa chỉ email: { user ? user.email : null}</div>
-                        <div style={{color: "yellow"}}> Mã thẻ ngân hàng: { user ? user.bankID : null}</div>
-                        <div style={{color: "yellow"}}> Ngân hàng: { user ? user.bankProvider : null}</div>
-                        <div style={{color: "yellow"}}> Số dư tài khoản: { user ? user.balance : null} Tỷ VND</div>
-                        <div> Nhà đã mua: &nbsp; {user ? JSON.stringify(user.houseOwnList, user.houseOwnList,2) : null}</div>
-                        <div> Nhà đã bán được: &nbsp; {user ? JSON.stringify(user.houseSellList, user.houseSellList,2) : null} </div>
+                        <div> Email: { user ? user.email : null}</div>
+                        <div style={{color: "yellow"}}> Mã Thẻ Ngân Hàng: { user ? user.bankID : null}</div>
+                        <div style={{color: "yellow"}}> Ngân Hàng: { user ? user.bankProvider : null}</div>
+                        <div style={{color: "yellow"}}> Số Dư Tài Khoản: { user ? user.balance : null} Tỷ VND</div>
+                        <div> Nhà Đã Mua: &nbsp; 
+                            {
+                                user ? user.houseOwnList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
+                            } 
+                        </div>
+                        <div> Nhà Đã Bán Được: &nbsp; 
+                            {
+                                user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
+                            } 
+                        </div>
                         <div style={{backgroundColor: "black", paddingLeft: "15vh"}}> Đăng tin bán nhà </div>
-                        <div> Loại nhà: &nbsp; 
+                        <div> Loại Nhà: &nbsp; 
                             <select ref={houseInputRef.categoryRef}>
                                 { currentCategory != null 
                                 ? currentCategory.map((ele, key) => (<option value={ele.name} key={key}>{ele.name}</option>))
@@ -86,23 +98,23 @@ const UserInfo = () => {
                         <div> Giá: &nbsp;
                             <input ref={houseInputRef.priceRef} type="text"></input>
                         </div>
-                        <div> Diện tích:&nbsp;
+                        <div> Diện Tích:&nbsp;
                             <input ref={houseInputRef.area} type="text"></input>
                         </div>
-                        <div> Mặt tiền:&nbsp;
+                        <div> Mặt Tiền:&nbsp;
                             <input ref={houseInputRef.front} type="text"></input>
                         </div>
                         <div> Hướng:&nbsp;
                             <input ref={houseInputRef.direction} type="text"></input>
                         </div>
-                        <div> Vị trí:&nbsp;
+                        <div> Vị Trí:&nbsp;
                             <input ref={houseInputRef.address} type="text"></input>
                         </div>
                         <div>
                             <FileBase className="base64"  type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  
                         </div>
                         <div>
-                            <img className="image" alt="Chọn ảnh để upload" src={currentImg}/>
+                            <img className="image" alt="Chọn Anh Để Upload" src={currentImg}/>
                         </div>
                         <div> 
                             <button type="button" className="shadow upload_button" onClick={onHouseUpload}></button>

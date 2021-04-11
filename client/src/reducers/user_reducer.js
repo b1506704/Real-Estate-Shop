@@ -20,6 +20,7 @@ import {
   DELETE_CATEGORY,
   UPDATE_CATEGORY,
   SET_NOTIFICATION,
+  SHOW_USER_INFO
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -77,6 +78,8 @@ export default (state = {}, action) => {
         return { ...state, updatedCategory: action.payload}                    
     case SET_NOTIFICATION:
         return { ...state, notif: action.payload}
+    case SHOW_USER_INFO:
+        return { ...state, isShowUserInfo: action.payload}
     default:
         return state;
   }

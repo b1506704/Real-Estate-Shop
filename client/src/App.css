@@ -7,10 +7,6 @@
   outline: none;
   font-family: Overall;
 }
-/* *:after,
-*:before {
-  box-sizing: border-box;
-} */
 
 @font-face {
 	font-family: Overall;
@@ -34,10 +30,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-	position: relative;
-	min-height: 100%;
-	background: rgba(255, 255, 255, 0.986);
-	filter: brightness(.85) contrast(1.2);
+	height: 100%;
 	background: url('./assets/imgs/background.jpg') no-repeat center center fixed; 
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -45,17 +38,13 @@ body {
 	background-size: cover;
 	color: #ffffff;
 	margin: 0;
-	overflow-y: auto;
-	overflow-x: hidden;
-	padding-bottom: 100px; 
 }
 h1, h2, h3, h4, h5 {
 	color: #f1dfdf;
 }
-.content-wrapper {
-	padding-left: 100px;
-	padding-right: 100px;
-	margin: 0 auto;
+
+main {
+	margin-left: 220px;
 }
 
 

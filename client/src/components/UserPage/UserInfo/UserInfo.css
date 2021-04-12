@@ -97,7 +97,9 @@
 
 .user_info_container input, .user_info_container select {
     font-size: 18px;
+    border-radius: 5px;
     padding-left: 1vh;
-    background-color: rgba(252, 249, 249, 0.541);
+    color: rgb(255, 253, 253);
+    background-color: rgba(19, 18, 18, 0.678);
     width: 200px;
 }

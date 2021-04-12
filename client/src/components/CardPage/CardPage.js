@@ -67,11 +67,11 @@ const CardPage = ({context}) => {
         dispatch(fetchHouse())
         .then(() => dispatch(setNotification("Làm mới thành công")));
     }
-    //check
+    
     const searchByPrice = (e) => {
         e.preventDefault();
-        const price = searchInput.current.value;
-        if (price.trim() === '') {
+        const price = parseFloat(searchInput.current.value);
+        if (isNaN(price)) {
             dispatch(setNotification(`Vui lòng nhập giá tiền`));
         } else {
             dispatch(filterHouseByPrice(price));
@@ -85,7 +85,7 @@ const CardPage = ({context}) => {
                     <div className="card_header"> <b>Nhà Bán ({houseList ? houseList.length : 0})</b> 
                         <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadHouse}></button>
                         <form onSubmit={(e) => searchByPrice(e)}>
-                            <input type="number" ref={searchInput} className="shadow" placeholder="Tìm theo giá"></input>
+                            <input type="text" ref={searchInput} className="shadow" placeholder="Tìm theo giá"></input>
                             <input type="submit" className="shadow"></input>
                         </form>
                     </div>

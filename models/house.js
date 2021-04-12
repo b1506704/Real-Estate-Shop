@@ -19,7 +19,15 @@ const houseSchema = mongoose.Schema({
     area: Number,
     front: Number,
     direction: String,
-    address: String
+    address: String,
+    lat: {
+        type:Number,
+        default: 10.980327606201172
+    },
+    lng: {
+        type:Number,
+        default: 106.67426300048828
+    }
 });
 
 var House = mongoose.model('House', houseSchema);

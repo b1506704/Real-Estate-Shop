@@ -1,8 +1,13 @@
 .register_container {
-    height: 530px;
+    height: 0px;
     width: 450px;
-    background-color: rgba(173, 173, 155, 0.753);
+    opacity: 0;
+    background-color: rgba(5, 1, 1, 0.507);
     border-radius: 15px;
+    animation-name: appear_h530;
+    animation-duration: 0.85s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
  }
  .register_container h1 {
      text-align: center;
@@ -22,7 +27,7 @@
  .register_container input[type='text'], 
  .register_container input[type='password']
   {
-     color: rgb(199, 56, 111);
+     color: rgb(255, 255, 255);
      font-size: 25px;
      padding: 5px;
      height: 40px;
@@ -55,4 +60,15 @@
  .register_container .scroll_position_holder {
      position: relative;
      top: -25vh;
+ }
+
+ @keyframes appear_h530 {
+     from {
+        height: 0;
+        opacity: 0;
+     }
+     to {
+        height: 530px;
+        opacity: 1;
+     }
  }

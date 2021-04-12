@@ -57,7 +57,7 @@
 	position: absolute;
 	right: 42vh;
 }
-.card_page form input[type=number] {
+.card_page form input[type=text] {
 	position: relative;
 	padding-left: 2vh;
 	height: 50px;
@@ -69,7 +69,7 @@
     color: rgb(7, 7, 7);
 	transition: all 0.4s ease-in-out;
 }
-.card_page form input[type=number]:focus {
+.card_page form input[type=text]:focus {
 	background-color: rgb(248, 245, 240);
 	border-bottom: rgb(130, 207, 243) 5px solid;
 }

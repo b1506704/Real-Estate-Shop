@@ -18,6 +18,8 @@ const UserInfo = () => {
         front: useRef(null),
         direction: useRef(null),
         address: useRef(null),
+        lat: useRef(null),
+        lng: useRef(null)
     };
     const currentLoginUser = useSelector((state) => state.user_reducer.login);
     const user = useSelector((state) => state.user_reducer.currentUser);
@@ -39,7 +41,9 @@ const UserInfo = () => {
             area: houseInputRef.area.current.value || null,
             front: houseInputRef.front.current.value || null,
             direction: houseInputRef.direction.current.value || null,
-            address: houseInputRef.address.current.value || null
+            address: houseInputRef.address.current.value || null,
+            lat: parseFloat(houseInputRef.lat.current.value) || null,
+            lng: parseFloat(houseInputRef.lng.current.value) || null
         };
         dispatch(createHouse(uploadHouse));
         
@@ -63,10 +67,10 @@ const UserInfo = () => {
                 <> 
                 <div style={{color: "yellow"}}> Thu Nhập: { user ? user.balance : null} Tỷ VND</div>
                 <div> Nhà Đã Bán Được: &nbsp; 
+                </div> 
                     {
                         user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
                     } 
-                </div> 
                 </>
                 : null}
                 
@@ -77,15 +81,15 @@ const UserInfo = () => {
                         <div style={{color: "yellow"}}> Ngân Hàng: { user ? user.bankProvider : null}</div>
                         <div style={{color: "yellow"}}> Số Dư Tài Khoản: { user ? user.balance : null} Tỷ VND</div>
                         <div> Nhà Đã Mua: &nbsp; 
+                        </div>
                             {
                                 user ? user.houseOwnList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
                             } 
-                        </div>
                         <div> Nhà Đã Bán Được: &nbsp; 
+                        </div>
                             {
                                 user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
                             } 
-                        </div>
                         <div style={{backgroundColor: "black", paddingLeft: "15vh"}}> Đăng tin bán nhà </div>
                         <div> Loại Nhà: &nbsp; 
                             <select ref={houseInputRef.categoryRef}>
@@ -107,8 +111,14 @@ const UserInfo = () => {
                         <div> Hướng:&nbsp;
                             <input ref={houseInputRef.direction} type="text"></input>
                         </div>
-                        <div> Vị Trí:&nbsp;
+                        <div> Địa chỉ:&nbsp;
                             <input ref={houseInputRef.address} type="text"></input>
+                        </div>
+                        <div> Lat:&nbsp;
+                            <input ref={houseInputRef.lat} type="text"></input>
+                        </div>
+                        <div> Lng:&nbsp;
+                            <input ref={houseInputRef.lng} type="text"></input>
                         </div>
                         <div>
                             <FileBase className="base64"  type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  

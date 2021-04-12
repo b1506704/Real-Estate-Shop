@@ -1,8 +1,13 @@
 .bank_container {
-    height: 350px;
+    height: 0px;
+    opacity: 0;
     width: 450px;
-    background-color: rgba(255, 255, 255, 0.753);
+    background-color: rgba(0, 0, 0, 0.479);
     border-radius: 15px;
+    animation-name: appear_h350;
+    animation-duration: 0.85s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
  }
  .bank_container h1 {
      text-align: center;
@@ -24,13 +29,13 @@
      font-weight: bold;
  }
  .bank_container input[type='text'], .bank_container select {
-     color: rgb(2, 2, 2);
+     color: rgb(255, 251, 251);
      font-size: 21px;
      font-weight: bold;
      padding-left: 5px;
      height: 30px;
      width: 120px;
-     background-color: rgba(233, 233, 216, 0.6);
+     background-color: rgba(3, 3, 0, 0.6);
      border-radius: 5px;
  }
 .bank_container input[type=submit], .bank_container input[type=button] {
@@ -57,4 +62,15 @@
  .bank_container .scroll_position_holder {
     position: relative;
     top: -25vh;
+}
+
+@keyframes appear_h350 {
+    from {
+       height: 0;
+       opacity: 0;
+    }
+    to {
+       height: 350px;
+       opacity: 1;
+    }
 }

@@ -1,8 +1,13 @@
 .login_container {
-    height: 430px;
+    height: 0px;
+    opacity: 0;
     width: 450px;
-    background-color: rgba(255, 255, 255, 0.753);
+    background-color: rgba(5, 1, 1, 0.507);
     border-radius: 15px;
+    animation-name: appear_h430;
+    animation-duration: 0.85s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
  }
  .login_container h1 {
      text-align: center;
@@ -21,7 +26,7 @@
      font-weight: bold;
  }
  .login_container input[type='text'], .login_container input[type='password'] {
-     color: rgb(2, 2, 2);
+     color: rgb(255, 255, 255);
      font-size: 25px;
      font-weight: bold;
      padding: 5px;
@@ -54,3 +59,13 @@
      position: relative;
      top: -25vh;
  }
+ @keyframes appear_h430 {
+    from {
+       height: 0;
+       opacity: 0;
+    }
+    to {
+       height: 430px;
+       opacity: 1;
+    }
+}

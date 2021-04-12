@@ -2,6 +2,7 @@ import {React, useRef, useState} from 'react';
 import FileBase from 'react-file-base64';
 import {useDispatch, useSelector} from 'react-redux';
 import LoadingContainer from '../../../utils/LoadingContainer/LoadingContainer';
+import GoogleMap from '../../../utils/GoogleMap/GoogleMap';
 import {
   buyHouse, 
   filterHouse, 
@@ -29,6 +30,8 @@ const Card = ({house, category, bank, type, mode}) => {
         front: useRef(null),
         direction: useRef(null),
         address: useRef(null),
+        lat: useRef(null),
+        lng: useRef(null)
       };
     const categoryInputRef = 
     {
@@ -99,7 +102,9 @@ const Card = ({house, category, bank, type, mode}) => {
           area: houseInputRef.area.current.value || null,
           front: houseInputRef.front.current.value || null,
           direction: houseInputRef.direction.current.value || null,
-          address: houseInputRef.address.current.value || null
+          address: houseInputRef.address.current.value || null,
+          lat: parseFloat(houseInputRef.lat.current.value) || null,
+          lng: parseFloat(houseInputRef.lng.current.value) || null
         };
           dispatch(updateHouse(house.id, updatedHouse))
           .then(() => setIsEditing(false));
@@ -174,8 +179,24 @@ const Card = ({house, category, bank, type, mode}) => {
               }
               </div>
               <div> Địa chỉ:&nbsp;
-              { isEditing === false ? house.address
-                : (<input ref={houseInputRef.address} type="text" placeholder={house.address}></input>)
+                
+              { isEditing === false 
+                ? <>
+                    {house.address + ` (lat: ${house.lat}, lng: ${house.lng})`}
+                    <GoogleMap lat={house.lat} lng={house.lng}/>
+                  </>
+                : <>
+                    <input ref={houseInputRef.address} type="text" placeholder={house.address}></input>
+                    <div> Lat: 
+                      <input ref={houseInputRef.lat} type="text" placeholder={house.lat}></input>
+                    </div>
+                    <div> Lng: 
+                      <input ref={houseInputRef.lng} type="text" placeholder={house.lng}></input>
+                    </div>
+                    <div>
+                      <GoogleMap lat={house.lat} lng={house.lng}/>
+                    </div>
+                  </>
               }
               </div>
               

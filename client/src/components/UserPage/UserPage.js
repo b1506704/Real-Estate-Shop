@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Route, Switch} from 'react-router-dom';
 import NavBar from '../NavBar/NavBar';
 import HeadingTitle from '../HeadingTitle/HeadingTitle';
 import HouseCategory from '../HouseCategory/HouseCategory';
@@ -9,12 +9,27 @@ import Footer from '../Footer/Footer';
 const UserPage = ({user}) => {
     return(
         <div>
-            <NavBar userName={user.userName} userMode="user"/>
             <main>
-                <HeadingTitle title={`Chào mừng ${user.userName} đến với sàn giao dịch`} subtitle={"Giao dịch uy tín, chất lượng"}/>
-                <HouseCategory/>
-                <HouseList/>
-                <Footer/>
+                <Switch>
+                    <Route exact path="/">
+                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <NavBar userName={user.userName} userMode="user"/>
+                        <HouseCategory/>
+                        <HouseList/>
+                        <Footer/>
+                    </Route>
+                    <Route path="/schedule">
+                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <NavBar userName={user.userName} userMode="user"/>
+                        <Footer/>
+                    </Route>
+                    <Route path="/house">
+                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <NavBar userName={user.userName} userMode="user"/>
+                        <HouseList/>
+                        <Footer/>
+                    </Route>
+                </Switch>
             </main>
         </div>
     );

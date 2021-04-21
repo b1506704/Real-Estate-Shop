@@ -1,10 +1,9 @@
 import { React, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useHistory } from 'react-router-dom';
 import Modal from '../Modal/Modal';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import BankPage from '../BankPage/BankPage';
 import Notification from './Notification/Notification';
 import UserInfo from '../UserPage/UserInfo/UserInfo';
 import {logout, setNotification} from '../../actions/user_actions';
@@ -12,9 +11,9 @@ import './NavBar.css';
 
 const NavBar = ({userMode, userName}) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const modal = useRef(null);
     const [isLoginPageOpen, setIsLoginPageOpen] = useState(false);
-    const [isCreditPageOpen, setIsCreditPageOpen] = useState(false);
     const [isRegisterPageOpen, setIsRegisterPageOpen] = useState(false);
     const currentUserInfo = useSelector ((state) => state.user_reducer.login);
     const currentNotif = useSelector((state) => state.user_reducer.notif);
@@ -28,33 +27,26 @@ const NavBar = ({userMode, userName}) => {
                     : <a className="home_nav" onClick={() => {
                         modal.current.close();
                     }}>
+                        Trang Chủ
                         </a>
                 }
-                {
-                    userMode != "user" 
-                    ? null 
-                    : <a className="bank_nav" onClick={() => {
-                        setIsCreditPageOpen(true);
-                        setIsRegisterPageOpen(false);
-                        setIsLoginPageOpen(false);
-                        modal.current.open();
-                    }}>
-                        </a>
-                }
+                
                 {
                     userMode === "user" 
                     ? <>
-                        <span className="neon"> | {userName} |</span>
-                        <a className="user_nav neon"></a>
-
+                        <a className="user_nav neon">| {userName} |</a>
+                        <a className="schedule_nav" onClick={() => history.push('/schedule')}>Lịch Hẹn</a>
+                        <a className="edit_house_nav" onClick={() => history.push('/house')}>Nhà Bán</a>
                     </>
                     : null
                 }
                 {
                     userMode === "admin" 
                     ? <>
-                        <span className="neon"> | {userName} |</span>
-                        <a className="user_nav neon"></a>
+                        <a className="user_nav neon">| {userName} |</a>
+                        <a className="edit_category_nav" onClick={() => history.push('/edit_category')}>Loại Nhà</a>
+                        <a className="edit_house_nav" onClick={()=> history.push('/edit_house')}>Nhà</a>
+                        <a className="edit_user_nav" onClick={()=> history.push('/edit_user')}>Người Dùng</a>
 
                     </>
                     : null
@@ -63,10 +55,10 @@ const NavBar = ({userMode, userName}) => {
                     userMode != "admin" && userMode != "user"
                     ? <a className="register_nav" onClick={() => {
                         setIsRegisterPageOpen(true);
-                        setIsCreditPageOpen(false);
                         setIsLoginPageOpen(false);
                         modal.current.open();
                     }}>
+                        Đăng Ký
                         </a>
                     : null 
                 }
@@ -77,20 +69,21 @@ const NavBar = ({userMode, userName}) => {
                         dispatch(logout(currentUserInfo))
                         .then(() => dispatch(setNotification("Đăng xuất thành công")));
                         modal.current.close();
+                        history.push('/');
                         }}>
+                        Đăng Xuất
                         </a> 
                     : <a className="login_nav" onClick={() => {
                         setIsLoginPageOpen(true);
-                        setIsCreditPageOpen(false);
                         setIsRegisterPageOpen(false);
                         modal.current.open();
                     }}>
+                        Đăng Nhập
                         </a> 
                 }
             </nav>
             <Modal ref={modal}>
                 { isLoginPageOpen ? (<LoginPage close={() => modal.current.close()}/>) : null}
-                { isCreditPageOpen ? (<BankPage close={() => modal.current.close()}/>) : null}
                 { isRegisterPageOpen ? (<RegisterPage close={() => modal.current.close()}/>) : null}
             </Modal>
             {currentNotif ? <Notification message={currentNotif}/> : null}

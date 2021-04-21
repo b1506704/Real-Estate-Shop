@@ -25,12 +25,13 @@ export const deleteHouse = async (req, res) => {
 }
 
 export const createHouse = async (req, res) => {
-    const { id, price, category, imgUrl, isBought, houseOwner, houseSeller, area, front , direction, address, lat, lng } = req.body;
+    const { id, price, message, category, imgUrl, isBought, houseOwner, houseSeller, area, front , direction, address, lat, lng } = req.body;
 
     const newHouse = new House(
         { 
             id: id, 
             price: price,
+            message: message,
             category: category,
             imgUrl: imgUrl, 
             isBought: isBought,
@@ -55,7 +56,7 @@ export const createHouse = async (req, res) => {
 
 export const updateHouse = async (req, res) => { 
     const { id } = req.params;
-    const { price, category, imgUrl, area, front, direction, address, lat, lng } = req.body;
+    const { price, category, message, imgUrl, area, front, direction, address, lat, lng } = req.body;
     try {
         const house = await House.findOne({id: id});
         const updatedHouse = await House.findOneAndUpdate(
@@ -63,6 +64,7 @@ export const updateHouse = async (req, res) => {
             {
                 price: price,
                 category: category,
+                message: message,
                 imgUrl: imgUrl, 
                 area: area, 
                 front: front, 

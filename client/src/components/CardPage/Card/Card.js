@@ -25,6 +25,7 @@ const Card = ({house, category, bank, type, mode}) => {
     const houseInputRef = 
       {
         categoryRef: useRef(null),
+        message: useRef(null),
         priceRef: useRef(null),
         area: useRef(null),
         front: useRef(null),
@@ -98,6 +99,7 @@ const Card = ({house, category, bank, type, mode}) => {
         const updatedHouse = {
           price: houseInputRef.priceRef.current.value || null,
           category: houseInputRef.categoryRef.current.value || null,
+          message: houseInputRef.message.current.value || null,
           imgUrl:  currentImg ? currentImg : null,
           area: houseInputRef.area.current.value || null,
           front: houseInputRef.front.current.value || null,
@@ -106,8 +108,16 @@ const Card = ({house, category, bank, type, mode}) => {
           lat: parseFloat(houseInputRef.lat.current.value) || null,
           lng: parseFloat(houseInputRef.lng.current.value) || null
         };
+        if (parseFloat(houseInputRef.lat.current.value) <=-90 
+          && parseFloat(houseInputRef.lat.current.value) >= 90
+          && parseFloat(houseInputRef.lng.current.value) <= -180
+          && parseFloat(houseInputRef.lng.current.value) >= 180
+        ) {
           dispatch(updateHouse(house.id, updatedHouse))
           .then(() => setIsEditing(false));
+        } else {
+          dispatch(setNotification("Tọa độ không hợp lệ!"));
+        }
       } else if (type === "category") {
           const updatedCategory = {
             name: categoryInputRef.nameRef.current.value || category.name,
@@ -140,11 +150,16 @@ const Card = ({house, category, bank, type, mode}) => {
     return (
       <div className="card_detail shadow">
         <div className="title_bar shadow">
-          { type === "house" ? '#' + house.id : type === "category" ? '#' + category.name : type ==="bank" ? '#' + bank.id : null }            
+          { type === "house" ? house.message : type === "category" ? category.name : type ==="bank" ? '#' + bank.id : null }            
         </div>
         { 
           type === "house" 
           ? <div className="house_info">
+              <div> Thông điệp: &nbsp;
+                { isEditing === false ? house.message
+                  : (<input ref={houseInputRef.message} type="text" placeholder={house.message}></input>)
+                }
+              </div>
               <div> Loại nhà: &nbsp; 
                 { isEditing === false ? house.category
                   : (<select ref={houseInputRef.categoryRef}>

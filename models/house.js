@@ -4,6 +4,7 @@ const houseSchema = mongoose.Schema({
         type: String,
         unique: true
     },
+    message: String,
     category: String,
     imgUrl: String,
     price: {
@@ -22,11 +23,15 @@ const houseSchema = mongoose.Schema({
     address: String,
     lat: {
         type:Number,
-        default: 10.980327606201172
+        default: 10.980327606201172,
+        min: -90,
+        max: 90
     },
     lng: {
         type:Number,
-        default: 106.67426300048828
+        default: 106.67426300048828,
+        min: -180,
+        max: 180
     }
 });
 

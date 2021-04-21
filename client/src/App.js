@@ -1,6 +1,6 @@
 import {React, useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { Route, Switch} from 'react-router-dom';
 import NavBar from './components/NavBar/NavBar';
 import HouseCategory from './components/HouseCategory/HouseCategory';
 import HouseList from './components/HouseList/HouseList';
@@ -43,13 +43,17 @@ const App = () => {
     } else if (loginInfo === undefined || loginInfo === null){
         return(
             <div>
-                <NavBar/>
-                <main>
-                    <HeadingTitle title={title} subtitle={subTitle} />
-                    <HouseCategory/>
-                    <HouseList/>
-                    <Footer/>
-                </main>
+                <Switch>
+                    <Route exact path="/">
+                        <NavBar/>
+                        <main>
+                            <HeadingTitle title={title} subtitle={subTitle} />
+                            <HouseCategory/>
+                            <HouseList/>
+                            <Footer/>
+                        </main>
+                    </Route>
+                </Switch>
             </div>
         );
     } else {

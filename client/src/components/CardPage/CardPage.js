@@ -22,6 +22,7 @@ const CardPage = ({context}) => {
                 {
                     id: random(1,2000),  
                     price: random(1,200),
+                    message: 'Cần bán gấp ',
                     category: categoryList !=null && categoryList.length!= 0 ? categoryList[random(0,  categoryList.length - 1)].name : null,
                     imgUrl: null,
                     isBought: false, 

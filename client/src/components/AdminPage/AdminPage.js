@@ -1,23 +1,46 @@
 import React from 'react';
-
+import { Route, Switch} from 'react-router-dom';
 import NavBar from '../NavBar/NavBar';
 import HeadingTitle from '../HeadingTitle/HeadingTitle';
 import EditHouseCategory from '../EditHouseCategory/EditHouseCategory';
 import EditHouseList from '../EditHouseList/EditHouseList';
-import EditBankList from '../EditBankList/EditBankList';
 import Footer from '../Footer/Footer';
 import './AdminPage.css';
 
 const AdminPage = ({userName}) => {
     return(
         <div>
-            <NavBar userName={userName} userMode="admin"/>
             <main>
-                <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
-                <EditBankList/>
-                <EditHouseCategory/>
+                {/* <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                <NavBar userName={userName} userMode="admin"/>
                 <EditHouseList/>
-                <Footer/>
+                <Footer/> */}
+                <Switch>
+                    <Route exact path="/">
+                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <NavBar userName={userName} userMode="admin"/>
+                        <EditHouseList/>
+                        <Footer/>
+                    </Route>
+                    <Route path="/edit_category">
+                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <NavBar userName={userName} userMode="admin"/>
+                        <EditHouseCategory/>
+                        <Footer/>
+                    </Route>
+                    <Route path="/edit_house">
+                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <NavBar userName={userName} userMode="admin"/>
+                        <EditHouseList/>
+                        <Footer/>
+                    </Route>
+                    <Route path="/edit_user">
+                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <NavBar userName={userName} userMode="admin"/>
+                        <Footer/>
+                    </Route>
+                </Switch>
+                
             </main>
         </div>
     );

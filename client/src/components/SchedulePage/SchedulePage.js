@@ -9,7 +9,6 @@ const RegisterPage = ({close}) => {
     const [userInfo, setUserInfo] = useState({
         userName: '',
         passWord: '',
-        fullName: '',
         gender: '',
         email: ''
     });
@@ -39,12 +38,8 @@ const RegisterPage = ({close}) => {
             <h1>Đăng Ký</h1>
             <form onSubmit={(e) => {
                     e.preventDefault();
-
-                    if (userInfo.gender === '' || e.target.password.value != e.target.re_password.value ) {
-                        dispatch(setNotification("Thông tin không hợp lệ!"));
-                    } else {
-                        setUserInfo({...userInfo, userName: e.target.username.value, passWord:e.target.password.value, fullName: e.target.full_name.value, email: e.target.email.value});
-                    }
+                    setUserInfo({userName: e.target.username.value, passWord:e.target.password.value, email: e.target.email.value});
+                    if (userInfo.gender === '') dispatch(setNotification("Vui lòng chọn giới tính"));
                 }}>
                 <div>
                     <label>Tên Đăng Ký:</label>
@@ -58,8 +53,8 @@ const RegisterPage = ({close}) => {
                     <label>Nam: </label>
                     <input 
                         type="radio" 
-                        checked={userInfo.gender === 'Nam'} 
-                        onChange={() => setUserInfo({...userInfo, gender: 'Nam'})}
+                        checked={userInfo.gender === 'male'} 
+                        onChange={() => setUserInfo({...userInfo, gender: 'male'})}
                         value="male" 
                          
                         name="male">
@@ -67,8 +62,8 @@ const RegisterPage = ({close}) => {
                     <label>Nữ: </label>
                     <input 
                         type="radio" 
-                        checked={userInfo.gender === 'Nữ'} 
-                        onChange={() => setUserInfo({...userInfo, gender: 'Nữ'})}
+                        checked={userInfo.gender === 'female'} 
+                        onChange={() => setUserInfo({...userInfo, gender: 'female'})}
                         value="female" 
                          
                         name="female">

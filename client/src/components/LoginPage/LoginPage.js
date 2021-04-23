@@ -8,8 +8,9 @@ const LoginPage = ({close}) => {
     const dispatch = useDispatch();
     const [userInfo, setUserInfo] = useState({
         userName: '',
-        passWord: ''
+        passWord: '',
     });
+    const [isRemember, setIsRemember] = useState(false);
     const modalRef = useRef();
 
     useEffect(() => {
@@ -39,15 +40,20 @@ const LoginPage = ({close}) => {
                 }}>
                 <div>
                     <label>Tên Đăng Nhập:</label>
-                    <input type="text" autoFocus={true} name="username"></input>
+                    <input type="text" autoFocus={true} required minLength={1} maxLength={8} placeholder="<=8 ký tự" name="username"></input>
                 </div>
                 <div>
                     <label>Mật Khẩu:</label>
-                    <input type="password" name="password"></input>
+                    <input type="password" required minLength={1} maxLength={8} placeholder="<=8 ký tự" name="password"></input>
+                </div>
+                <div>
+                    <label>Nhớ Tài Khoản:</label>
+                    <input type="checkbox" name="remember_acc" onClick={() => setIsRemember(true)}></input>
+                    <a>Quên Mật Khẩu</a>
                 </div>
                 <div className="button_container">
-                    <input type="submit" className="drop_shadow neon_effect" value="OK"></input>
-                    <input type="button" className="drop_shadow neon_effect" value="Thoát" onClick={close}></input>
+                    <input type="submit" className="drop_shadow" value="OK"></input>
+                    <input type="button" className="drop_shadow" value="Thoát" onClick={close}></input>
                 </div>
             </form>
         </div>

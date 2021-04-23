@@ -5,6 +5,7 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true,
         unique: true,
+        undefined: false,
         maxlength: 8
     },
     passWord: {
@@ -17,6 +18,8 @@ const userSchema = mongoose.Schema({
         min: 0,
         default: 0
     },
+    gender: String,
+    fullName: String,
     email: {
         type: String,
         default: '',
@@ -32,6 +35,7 @@ const userSchema = mongoose.Schema({
     },
     houseOwnList: Array,
     houseSellList: Array,
+    scheduleList: Array,
     isLogin: {
         type: Boolean,
         default: false

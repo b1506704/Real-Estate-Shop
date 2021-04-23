@@ -54,7 +54,9 @@
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
-  color: transparent;
+  color: rgb(0, 0, 0);
+  font-size: 25px;
+  font-weight: bold;
   user-select: none;
   overflow: hidden;
   height: 33px; 
@@ -64,10 +66,13 @@
 }
 
 .browse_button {
+
   background: url("../../../assets/imgs/filter.png");
 }
 .buy_button {
-  background: url("../../../assets/imgs/shopping-cart.png");
+  background-position: left 15% center !important;
+  text-align: center !important;
+  background: url("../../../assets/imgs/schedule.png");
 }
 .edit_button {
   background: url("../../../assets/imgs/pencil.png");

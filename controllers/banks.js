@@ -16,7 +16,7 @@ export const getBanks = async (req, res) => {
 export const deleteBank = async (req, res) => { 
     const { id } = req.params;
     try {
-        const bank = await Bank.findOneAndDelete({id: id});
+        const bank = await Bank.findOneAndDelete({userName: id});
         res.status(200).json(bank);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -36,9 +36,9 @@ export const createBank = async (req, res) => {
 export const updateBank = async (req, res) => { 
     const { provider, value, owner } = req.body;
     try {
-        const bank = await Bank.findOne({id: req.params.id});
+        const bank = await Bank.findOne({userName: req.params.id});
         const updatedBank = await Bank.findOneAndUpdate(
-            {id: bank.id},
+            {userName: bank.userName},
             {provider: provider, value: value, owner: owner} , 
             {new: true}
         );
@@ -51,7 +51,7 @@ export const getBank = async (req, res) => {
     const { id } = req.body;
 
     try {
-        const bank = await Bank.findOne({id: id});
+        const bank = await Bank.findOne({userName: id});
         res.status(200).json(bank);
     } catch (error) {
         res.status(404).json({ message: error.message });

@@ -13,6 +13,7 @@ const UserInfo = () => {
     const houseInputRef = 
     {
         categoryRef: useRef(null),
+        message: useRef(null),
         priceRef: useRef(null),
         area: useRef(null),
         front: useRef(null),
@@ -30,12 +31,14 @@ const UserInfo = () => {
         }
     },[currentLoginUser]);
 
-    const onHouseUpload = () => {
+    const onHouseUpload = (e) => {
+        e.preventDefault();
         const uploadHouse = 
         {
             id: random(1,10000),  
             price: houseInputRef.priceRef.current.value || null,
             category: houseInputRef.categoryRef.current.value || null,
+            message: houseInputRef.message.current.value || null,
             imgUrl:  currentImg ? currentImg : null,
             houseSeller:  user ? user.userName : null,
             area: houseInputRef.area.current.value || null,
@@ -45,7 +48,11 @@ const UserInfo = () => {
             lat: parseFloat(houseInputRef.lat.current.value) || null,
             lng: parseFloat(houseInputRef.lng.current.value) || null
         };
-        dispatch(createHouse(uploadHouse));
+        if (currentImg) {
+            dispatch(createHouse(uploadHouse));
+        } else {
+            dispatch(setNotification("Vui lòng chọn ảnh"));
+        }
         
     }
 
@@ -63,7 +70,8 @@ const UserInfo = () => {
                     <button type="button" className="shadow refresh_button" onClick={refresh}></button>
                 </div>
                 
-                {currentLoginUser && currentLoginUser.isAdmin === true ?
+                {
+                currentLoginUser && currentLoginUser.isAdmin === true ?
                 <> 
                 <div style={{color: "yellow"}}> Thu Nhập: { user ? user.balance : null} Tỷ VND</div>
                 <div> Nhà Đã Bán Được: &nbsp; 
@@ -72,7 +80,8 @@ const UserInfo = () => {
                         user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
                     } 
                 </>
-                : null}
+                : null
+                }
                 
                 {currentLoginUser && currentLoginUser.isAdmin === false ?
                     <> 
@@ -91,44 +100,49 @@ const UserInfo = () => {
                                 user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
                             } 
                         <div style={{backgroundColor: "black", paddingLeft: "15vh"}}> Đăng tin bán nhà </div>
-                        <div> Loại Nhà: &nbsp; 
-                            <select ref={houseInputRef.categoryRef}>
-                                { currentCategory != null 
-                                ? currentCategory.map((ele, key) => (<option value={ele.name} key={key}>{ele.name}</option>))
-                                : null
-                                }
-                            </select>
-                        </div>
-                        <div> Giá: &nbsp;
-                            <input ref={houseInputRef.priceRef} type="text"></input>
-                        </div>
-                        <div> Diện Tích:&nbsp;
-                            <input ref={houseInputRef.area} type="text"></input>
-                        </div>
-                        <div> Mặt Tiền:&nbsp;
-                            <input ref={houseInputRef.front} type="text"></input>
-                        </div>
-                        <div> Hướng:&nbsp;
-                            <input ref={houseInputRef.direction} type="text"></input>
-                        </div>
-                        <div> Địa chỉ:&nbsp;
-                            <input ref={houseInputRef.address} type="text"></input>
-                        </div>
-                        <div> Lat:&nbsp;
-                            <input ref={houseInputRef.lat} type="text"></input>
-                        </div>
-                        <div> Lng:&nbsp;
-                            <input ref={houseInputRef.lng} type="text"></input>
-                        </div>
-                        <div>
-                            <FileBase className="base64"  type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  
-                        </div>
-                        <div>
-                            <img className="image" alt="Chọn Anh Để Upload" src={currentImg}/>
-                        </div>
-                        <div> 
-                            <button type="button" className="shadow upload_button" onClick={onHouseUpload}></button>
-                        </div>
+                        <form onSubmit={(e) => onHouseUpload(e)}>
+                            <div> Thông Điệp: &nbsp;
+                                <input ref={houseInputRef.message} required minLength={1} type="text"></input>
+                            </div>
+                            <div> Loại Nhà: &nbsp; 
+                                <select required ref={houseInputRef.categoryRef}>
+                                    { currentCategory != null 
+                                    ? currentCategory.map((ele, key) => (<option value={ele.name} key={key}>{ele.name}</option>))
+                                    : null
+                                    }
+                                </select>
+                            </div>
+                            <div> Giá: &nbsp;
+                                <input ref={houseInputRef.priceRef} required minLength={1} min={0} type="number" placeholder="Tỷ VND"></input>
+                            </div>
+                            <div> Diện Tích:&nbsp;
+                                <input ref={houseInputRef.area} required minLength={1} type="text"></input>
+                            </div>
+                            <div> Mặt Tiền:&nbsp;
+                                <input ref={houseInputRef.front} required minLength={1} type="text"></input>
+                            </div>
+                            <div> Hướng:&nbsp;
+                                <input ref={houseInputRef.direction} required minLength={1} type="text"></input>
+                            </div>
+                            <div> Địa Chỉ:&nbsp;
+                                <input ref={houseInputRef.address} required minLength={1} type="text"></input>
+                            </div>
+                            <div> Toạ Độ Lat:&nbsp;
+                                <input ref={houseInputRef.lat} required minLength={1} min={-90} max={90} type="number"></input>
+                            </div>
+                            <div> Toạ Độ Lng:&nbsp;
+                                <input ref={houseInputRef.lng} required minLength={1} min={-180} max={180} type="number"></input>
+                            </div>
+                            <div>
+                                <FileBase className="base64" type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  
+                            </div>
+                            <div>
+                                <img className="image" alt="Chọn Anh Để Upload" src={currentImg}/>
+                            </div>
+                            <div> 
+                                <button type="submit" className="shadow upload_button"></button>
+                            </div>
+                        </form>
                     </>
                     : null
                 }

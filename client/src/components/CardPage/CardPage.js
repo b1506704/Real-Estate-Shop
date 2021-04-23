@@ -3,17 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Card from './Card/Card';
 import LoadingContainer from '../../utils/LoadingContainer/LoadingContainer';
-import {createHouse, createBank, createCategory, fetchCategory, fetchBank, fetchHouse, setNotification, filterHouseByPrice } from '../../actions/user_actions';
+import {createHouse, createCategory, fetchCategory, fetchUser, fetchHouse, setNotification, filterHouseByPrice, register } from '../../actions/user_actions';
 import random from '../../utils/RandomNumber';
 import './CardPage.css';
 
 const CardPage = ({context}) => {
     const dispatch = useDispatch();
     const houseList = useSelector((state) => state.user_reducer.houseList);
-    const bankList = useSelector((state) => state.user_reducer.bankList);
+    const userList = useSelector((state) => state.user_reducer.userList);
     const categoryList = useSelector((state) => state.user_reducer.categoryList);
-    const bankProvider = ["Agribank","BIDV","Sacombank","Vietcombank"];   
-    const bankValue = [2, 5, 10, 20, 50, 100];   
     const searchInput = useRef(null);
 
     const addHouse = () => {
@@ -35,15 +33,7 @@ const CardPage = ({context}) => {
             )
         );
     }
-    const addBank = () => {
-        dispatch(createBank(
-            {
-                id: random(1,2000),
-                provider: bankProvider[random(0, bankProvider.length-1)],
-                value: bankValue[random(0, bankValue.length-1)]
-            }
-        ));
-    }
+    
     const addCategory = () => {
         dispatch(createCategory(
             {
@@ -59,8 +49,19 @@ const CardPage = ({context}) => {
         .then(() => dispatch(setNotification("Làm mới thành công")));
     }
 
-    const loadBank = () => {
-        dispatch(fetchBank())
+    const addUser = () => {
+        dispatch(register(
+            {
+                userName: random(1,2000),
+                passWord: random(1,2000),
+                gender: 'Male',
+                email: random(1,2000)
+            }
+        ));
+    }
+
+    const loadUser = () => {
+        dispatch(fetchUser())
         .then(() => dispatch(setNotification("Làm mới thành công")));
     }
 
@@ -151,23 +152,23 @@ const CardPage = ({context}) => {
                     </div>
                 </div>
             );
-        case "edit_card":
+        case "edit_user":
             return(
                 <div className="card_page">
-                    <div className="card_header"> <b>Quản Lý Tài Khoản Ngân Hàng ({bankList ? bankList.length : 0})</b> 
-                        <button type="button" className="card_menu_button add_button shadow" onClick={addBank}></button>
-                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadBank}></button>
+                    <div className="card_header"> <b>Quản Lý Người Dùng ({userList ? userList.length : 0})</b> 
+                        <button type="button" className="card_menu_button add_button shadow" onClick={addUser}></button>
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadUser}></button>
                     </div>
                     <div className="card_container">
                         {
-                            bankList != null && bankList.length != 0 ?
-                            bankList.map ((item,key) => 
-                            (<Card key={key} bank={item} type={"bank"} mode={"edit"}/>))
+                            userList != null && userList.length != 0 ?
+                            userList.map ((item,key) => 
+                            (<Card key={key} user={item} type={"user"} mode={"edit"}/>))
                             : <LoadingContainer style={'spinner'}/>
                         }
                     </div>
                 </div>
-            );                
+            );                          
         default:
             return (<LoadingContainer style={'dot'}/>);
     }

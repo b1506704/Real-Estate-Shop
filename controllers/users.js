@@ -28,6 +28,16 @@ export const getUser = async (req, res) => {
     }
 }
 
+export const deleteUser = async (req, res) => { 
+    const { userName } = req.params;
+    try {
+        const user = await User.findOneAndDelete({userName: userName});
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const login = async (req, res) => { 
     const { userName, passWord } = req.body;
 
@@ -53,8 +63,8 @@ export const logout = async (req, res) => {
 }
 
 export const register = async (req, res) => {
-    const { userName, passWord, email } = req.body;
-    const newUser = new User({ userName, passWord, email });
+    const { userName, passWord, gender, fullName, email } = req.body;
+    const newUser = new User({ userName, passWord, gender, fullName, email });
 
     try {
         await newUser.save();
@@ -63,16 +73,29 @@ export const register = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
-
+export const updateUser = async (req, res) => { 
+    const { userName, passWord, gender, fullName, email } = req.body;
+    try {
+        const user = await User.findOne({userName: req.params.userName});
+        const updatedUser = await User.findOneAndUpdate(
+            {userName: user.userName},
+            {userName, passWord, gender, fullName, email} , 
+            {new: true}
+        );
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
 export const addBank = async (req, res) => { 
     const { userName } = req.params;
     const { id, provider } = req.body;
     try {
         const user = await User.findOne({userName: userName});
-        const bank = await Bank.findOne({id, provider});
+        const bank = await User.findOne({userName: id, provider});
         if (bank.isOwned === false && bank.owner != user.userName) {
-            const updatedBank = await Bank.findOneAndUpdate({id: id, provider: provider},{isOwned: true, owner: user.userName}, {new: true});
-            const updatedUser = await User.findOneAndUpdate({userName: userName},{balance: updatedBank.value, bankID: bank.id, bankProvider: bank.provider}, {new: true});
+            const updatedBank = await User.findOneAndUpdate({userName: id, provider: provider},{isOwned: true, owner: user.userName}, {new: true});
+            const updatedUser = await User.findOneAndUpdate({userName: userName},{balance: updatedBank.value, bankID: bank.userName, bankProvider: bank.provider}, {new: true});
             res.status(200).json(updatedUser.balance);
         } else {
             res.status(404).json("Xảy ra lỗi!");
@@ -88,19 +111,19 @@ export const buyHouse = async (req, res) => {
     //todo: reduce bank value
     try {
         const user = await User.findOne({userName: userName});
-        const house = await House.findOne({id});
+        const house = await House.findOne({userName: id});
         const seller = await User.findOne({userName: house.houseSeller});
-        const bank = await Bank.findOne({owner: user.userName});
+        const bank = await User.findOne({owner: user.userName});
         if (house.isBought === false 
             && isValidPurchase(user.balance,house.price)  
             && user.userName != seller.userName
             ) {
-            const updatedHouse = await House.findOneAndUpdate({id: id},{isBought: true, houseOwner: userName}, {new: true});
+            const updatedHouse = await House.findOneAndUpdate({userName: id},{isBought: true, houseOwner: userName}, {new: true});
             const updatedSeller = await User.findOneAndUpdate(
                 {userName: seller.userName},
                 {
                     balance: seller.balance + updatedHouse.price,
-                    $push: {houseSellList: updatedHouse.id},
+                    $push: {houseSellList: updatedHouse.userName},
                 },
                 {new: true}
             );
@@ -108,11 +131,11 @@ export const buyHouse = async (req, res) => {
                 {userName: userName},
                 {
                     balance: user.balance - updatedHouse.price,
-                    $push: {houseOwnList: updatedHouse.id},
+                    $push: {houseOwnList: updatedHouse.userName},
                 },
                 {new: true}
             );
-            const updatedBank = await Bank.findOneAndUpdate(
+            const updatedBank = await User.findOneAndUpdate(
                 {owner: bank.owner},
                 {value: bank.value - updatedHouse.price},
                 {new: true}

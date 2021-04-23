@@ -9,14 +9,14 @@ import AdminPage from './components/AdminPage/AdminPage';
 import HeadingTitle from './components/HeadingTitle/HeadingTitle';
 import LoadingContainer from './utils/LoadingContainer/LoadingContainer';
 import Footer from './components/Footer/Footer';
-import {fetchHouse, fetchBank, fetchCategory } from './actions/user_actions';
+import {fetchHouse, fetchBank, fetchCategory, fetchUser } from './actions/user_actions';
 import './App.css';
 
 const App = () => {
     const dispatch = useDispatch();
     const storeState = useSelector ((state) => state.user_reducer);
     const loginInfo = useSelector((state) => state.user_reducer.login);
-    const [title, setTitle] = useState("Dịch vụ mua bán bất động sản RealEstaee");
+    const [title, setTitle] = useState("Dịch vụ mua bán bất động sản Real Estate");
     const [subTitle, setSubTitle] = useState("Giao dịch uy tín, nhanh chóng");
     
     console.log(storeState);
@@ -24,6 +24,10 @@ const App = () => {
 
     useEffect(()=> {
         dispatch(fetchHouse());
+    },[title]);
+
+    useEffect(()=> {
+        dispatch(fetchUser());
     },[title]);
     
     useEffect(()=> {

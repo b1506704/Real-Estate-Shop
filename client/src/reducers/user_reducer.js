@@ -2,11 +2,11 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   GET_USER,
+  FETCH_USER,
   LOGOUT_USER,
   FETCH_HOUSE,
   DELETE_HOUSE,
   CREATE_HOUSE,
-  BUY_HOUSE,
   FILTER_HOUSE,
   UPDATE_HOUSE,
   FILTER_HOUSE_BY_PRICE,
@@ -20,7 +20,10 @@ import {
   DELETE_CATEGORY,
   UPDATE_CATEGORY,
   SET_NOTIFICATION,
-  SHOW_USER_INFO
+  SHOW_USER_INFO,
+  ADD_SCHEDULE,
+  DELETE_USER,
+  UPDATE_USER
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -31,6 +34,14 @@ export default (state = {}, action) => {
         return { ...state, login: action.payload }
     case GET_USER:
         return { ...state, currentUser: action.payload }        
+    case FETCH_USER:
+        return { ...state, userList: action.payload }        
+    case DELETE_USER:
+        return {...state, 
+                userList: state.userList.filter((user) => user.userName != action.payload )
+            }
+    case UPDATE_USER:
+        return { ...state, updatedUser: action.payload}            
     case LOGOUT_USER:
         return { ...state, login: action.payload}  
     case FETCH_HOUSE:
@@ -46,8 +57,8 @@ export default (state = {}, action) => {
             }
     case UPDATE_HOUSE:
         return { ...state, updatedHouse: action.payload}            
-    case BUY_HOUSE:
-        return { ...state, credit: action.payload }
+    case ADD_SCHEDULE:
+        return { ...state, schedule: action.payload }
     case FILTER_HOUSE:
         return { 
             ...state, 

@@ -6,15 +6,12 @@ import EditHouseCategory from '../EditHouseCategory/EditHouseCategory';
 import EditHouseList from '../EditHouseList/EditHouseList';
 import Footer from '../Footer/Footer';
 import './AdminPage.css';
+import EditUser from '../EditUser/EditUser';
 
 const AdminPage = ({userName}) => {
     return(
         <div>
             <main>
-                {/* <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
-                <NavBar userName={userName} userMode="admin"/>
-                <EditHouseList/>
-                <Footer/> */}
                 <Switch>
                     <Route exact path="/">
                         <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
@@ -37,6 +34,7 @@ const AdminPage = ({userName}) => {
                     <Route path="/edit_user">
                         <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
                         <NavBar userName={userName} userMode="admin"/>
+                        <EditUser/>
                         <Footer/>
                     </Route>
                 </Switch>

@@ -12,19 +12,19 @@ const UserPage = ({user}) => {
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <HeadingTitle title="User Page" subtitle="Trang giao dịch mua bán nhà đất"/>
                         <NavBar userName={user.userName} userMode="user"/>
                         <HouseCategory/>
                         <HouseList/>
                         <Footer/>
                     </Route>
                     <Route path="/schedule">
-                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <HeadingTitle title="User Page" subtitle="Trang giao dịch mua bán nhà đất"/>
                         <NavBar userName={user.userName} userMode="user"/>
                         <Footer/>
                     </Route>
                     <Route path="/house">
-                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <HeadingTitle title="User Page" subtitle="Trang giao dịch mua bán nhà đất"/>
                         <NavBar userName={user.userName} userMode="user"/>
                         <HouseList/>
                         <Footer/>

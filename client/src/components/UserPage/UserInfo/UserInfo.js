@@ -73,8 +73,7 @@ const UserInfo = () => {
                 {
                 currentLoginUser && currentLoginUser.isAdmin === true ?
                 <> 
-                <div style={{color: "yellow"}}> Thu Nhập: { user ? user.balance : null} Tỷ VND</div>
-                <div> Nhà Đã Bán Được: &nbsp; 
+                <div> Số giao dịch thực hiện: &nbsp; 
                 </div> 
                     {
                         user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
@@ -85,20 +84,9 @@ const UserInfo = () => {
                 
                 {currentLoginUser && currentLoginUser.isAdmin === false ?
                     <> 
+                        <div> Họ và Tên: { user ? user.fullName : null}</div>
+                        <div> Giới Tính: { user ? user.gender : null}</div>
                         <div> Email: { user ? user.email : null}</div>
-                        <div style={{color: "yellow"}}> Mã Thẻ Ngân Hàng: { user ? user.bankID : null}</div>
-                        <div style={{color: "yellow"}}> Ngân Hàng: { user ? user.bankProvider : null}</div>
-                        <div style={{color: "yellow"}}> Số Dư Tài Khoản: { user ? user.balance : null} Tỷ VND</div>
-                        <div> Nhà Đã Mua: &nbsp; 
-                        </div>
-                            {
-                                user ? user.houseOwnList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
-                            } 
-                        <div> Nhà Đã Bán Được: &nbsp; 
-                        </div>
-                            {
-                                user ? user.houseSellList.map((e,k) => (<span key={k}>{e}</span>)) : 'Chưa có'
-                            } 
                         <div style={{backgroundColor: "black", paddingLeft: "15vh"}}> Đăng tin bán nhà </div>
                         <form onSubmit={(e) => onHouseUpload(e)}>
                             <div> Thông Điệp: &nbsp;
@@ -128,10 +116,10 @@ const UserInfo = () => {
                                 <input ref={houseInputRef.address} required minLength={1} type="text"></input>
                             </div>
                             <div> Toạ Độ Lat:&nbsp;
-                                <input ref={houseInputRef.lat} required minLength={1} min={-90} max={90} type="number"></input>
+                                <input ref={houseInputRef.lat} required minLength={1} min={-90} max={90} type="number" step=".01"></input>
                             </div>
                             <div> Toạ Độ Lng:&nbsp;
-                                <input ref={houseInputRef.lng} required minLength={1} min={-180} max={180} type="number"></input>
+                                <input ref={houseInputRef.lng} required minLength={1} min={-180} max={180} type="number" step=".01"></input>
                             </div>
                             <div>
                                 <FileBase className="base64" type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  

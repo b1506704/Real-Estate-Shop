@@ -19,6 +19,7 @@ import {
   UPDATE_BANK,
   ADD_SCHEDULE,
   REJECT_SCHEDULE,
+  DELETE_SCHEDULE,
   ACCEPT_SCHEDULE,
   GET_SCHEDULE,
   FETCH_CATEGORY,
@@ -276,15 +277,58 @@ export const setNotification = (notification) => async (dispatch) => {
   }
 };
 
-export const addSchedule = (userName, houseInfo) => async (dispatch) => {
+export const fetchSchedule = () => async (dispatch) => {
   try {
-    const { data } = await api.addBank(userName, houseInfo);
-    await dispatch({ type: ADD_BANK, payload: data});
-    await dispatch(setNotification("Cập nhật thành công"));
+    const { data } = await api.fetchSchedule();
+    dispatch({ type: GET_SCHEDULE, payload: data});
   } catch (error) {
-    dispatch(setNotification("Cập nhật thất bại"));
+    console.log(error.message);
   }
 };
+
+export const deleteSchedule = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.deleteSchedule(id);
+    await dispatch({ type: DELETE_SCHEDULE, payload: data});
+    await dispatch(fetchSchedule());
+    await dispatch(setNotification("Xóa hoàn tất"));
+  } catch (error) {
+    dispatch(setNotification("Xóa thất bại"));
+  }
+};
+
+export const markSchedule = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.acceptSchedule(id);
+    await dispatch({ type: ACCEPT_SCHEDULE, payload: data});
+    await dispatch(fetchSchedule());
+    await dispatch(setNotification("Duyệt lịch hẹn thành công"));
+  } catch (error) {
+    dispatch(setNotification("Duyệt lịch hẹn thất bại"));
+  }
+};
+export const rejectSchedule = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.rejectSchedule(id);
+    await dispatch({ type: REJECT_SCHEDULE, payload: data});
+    await dispatch(fetchSchedule());
+    await dispatch(setNotification("Từ chối lịch hẹn thành công"));
+  } catch (error) {
+    dispatch(setNotification("Từ chối lịch hẹn thất bại"));
+  }
+};
+
+export const addSchedule = (scheduleInfo) => async (dispatch) => {
+  try {
+    const { data } = await api.addSchedule(scheduleInfo);
+    await dispatch({ type: ADD_SCHEDULE, payload: data});
+    await dispatch(fetchSchedule());
+    await dispatch(setNotification("Đặt lịch hoàn tất"));
+  } catch (error) {
+    dispatch(setNotification("Đặt lịch thất bại"));
+  }
+};
+
 
 export const showMenu = (isShow) => async (dispatch) => {
   try {

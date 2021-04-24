@@ -30,9 +30,9 @@ const App = () => {
         dispatch(fetchUser());
     },[title]);
     
-    useEffect(()=> {
-        dispatch(fetchBank());
-    },[title]);
+    // useEffect(()=> {
+    //     dispatch(fetchBank());
+    // },[title]);
 
     useEffect(()=> {
         dispatch(fetchCategory());

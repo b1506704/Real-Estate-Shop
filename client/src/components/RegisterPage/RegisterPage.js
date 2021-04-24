@@ -74,8 +74,6 @@ const RegisterPage = ({close}) => {
                         name="female">
                     </input>
                 </div>
-                {/* <div>
-                </div> */}
                 <div>
                     <label>Mật Khẩu </label>
                      <input type="password" name="password" required minLength={1} maxLength={12} placeholder="<=12 ký tự"></input>

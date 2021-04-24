@@ -29,6 +29,7 @@ export const ADD_SCHEDULE = 'add_schedule';
 export const GET_SCHEDULE = 'get_schedule';
 export const REJECT_SCHEDULE = 'reject_schedule';
 export const ACCEPT_SCHEDULE = 'accept_schedule';
+export const DELETE_SCHEDULE = 'delete_schedule';
 // notification actions
 export const SET_NOTIFICATION = 'set_notification';
 export const SHOW_USER_INFO = 'show_user_info';

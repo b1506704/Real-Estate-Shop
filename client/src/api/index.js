@@ -41,7 +41,7 @@ export const deleteCategory = (name) => axios.delete(`${categoryUrl}/${name}`);
 export const updateCategory = (name, toUpdateCategory) => axios.post(`${categoryUrl}/updateCategory/${name}`, toUpdateCategory);
 // schedule
 export const fetchSchedule = () => axios.get(scheduleUrl);
-export const addSchedule = (userName, scheduleInfo) => axios.post(`${scheduleUrl}/addSchedule/${userName}`, scheduleInfo);
-export const rejectSchedule = (userName, scheduleInfo) => axios.post(`${scheduleUrl}/rejectSchedule/${userName}`, scheduleInfo);
-export const acceptSchedule = (userName, scheduleInfo) => axios.post(`${scheduleUrl}/acceptSchedule/${userName}`, scheduleInfo);
-    
+export const addSchedule = (scheduleInfo) => axios.post(scheduleUrl, scheduleInfo);
+export const rejectSchedule = (id) => axios.post(`${scheduleUrl}/rejectSchedule/`, id);
+export const acceptSchedule = (id) => axios.post(`${scheduleUrl}/acceptSchedule/`, id);
+export const deleteSchedule = (id) => axios.delete(`${scheduleUrl}/${id}`);    

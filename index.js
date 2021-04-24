@@ -1,4 +1,3 @@
-
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -7,7 +6,8 @@ import dotenv from 'dotenv';
 import bodyParser from 'express';
 import userRoutes from './routes/users.js';
 import houseRoutes from './routes/houses.js';
-import bankRoutes from './routes/banks.js';
+// import bankRoutes from './routes/banks.js';
+import scheduleRoutes from './routes/schedules.js';
 import categoryRoutes from './routes/categories.js';
 
 const app = express();
@@ -23,7 +23,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/users', userRoutes);
 app.use('/houses', houseRoutes);
-app.use('/banks', bankRoutes);
+// app.use('/banks', bankRoutes);
+app.use('/schedules', scheduleRoutes);
 app.use('/categories', categoryRoutes);
 
 const dbUri = process.env.MONGODB_URI;

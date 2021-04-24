@@ -1,5 +1,6 @@
 import {React, useRef, useState} from 'react';
 import FileBase from 'react-file-base64';
+import { useHistory } from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux';
 import LoadingContainer from '../../../utils/LoadingContainer/LoadingContainer';
 import GoogleMap from '../../../utils/GoogleMap/GoogleMap';
@@ -25,6 +26,7 @@ import Vietcombank  from '../../../assets/imgs/vietcombank.png';
 import avatar from '../../../assets/imgs/user.png';
 
 const Card = ({house, category, bank, user, type, mode}) => {
+    const history = useHistory();
     const houseInputRef = 
       {
         categoryRef: useRef(null),
@@ -97,8 +99,9 @@ const Card = ({house, category, bank, user, type, mode}) => {
         if (currentLoginUser === null || currentLoginUser === undefined) {
           dispatch(setNotification("Cần đăng nhập để sử dụng chức năng này!"));
         } else {
-          dispatch(addSchedule(currentLoginUser.userName, house))
-          .then(() => dispatch(getUser(currentLoginUser.userName)));
+          history.push(`house/${house.id}`);
+          // dispatch(addSchedule(currentLoginUser.userName, house))
+          // .then(() => dispatch(getUser(currentLoginUser.userName)));
         } 
       }
     }

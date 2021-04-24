@@ -22,6 +22,10 @@ import {
   SET_NOTIFICATION,
   SHOW_USER_INFO,
   ADD_SCHEDULE,
+  ACCEPT_SCHEDULE,
+  REJECT_SCHEDULE,
+  DELETE_SCHEDULE,
+  GET_SCHEDULE,
   DELETE_USER,
   UPDATE_USER
 } from '../constants/actionTypes';
@@ -44,6 +48,18 @@ export default (state = {}, action) => {
         return { ...state, updatedUser: action.payload}            
     case LOGOUT_USER:
         return { ...state, login: action.payload}  
+    case GET_SCHEDULE:
+        return { ...state, scheduleList: action.payload }
+    case ADD_SCHEDULE:
+        return { ...state, schedule: action.payload }
+    case DELETE_SCHEDULE:
+        return {...state, 
+            scheduleList: state.scheduleList.filter((schedule) => schedule.id != action.payload )
+    }
+    case ACCEPT_SCHEDULE:
+        return { ...state, acceptedSchedule: action.payload }
+    case REJECT_SCHEDULE:
+        return { ...state, rejectedSchedule: action.payload }
     case FETCH_HOUSE:
         return { ...state, houseList: action.payload }
     case DELETE_HOUSE:
@@ -57,8 +73,6 @@ export default (state = {}, action) => {
             }
     case UPDATE_HOUSE:
         return { ...state, updatedHouse: action.payload}            
-    case ADD_SCHEDULE:
-        return { ...state, schedule: action.payload }
     case FILTER_HOUSE:
         return { 
             ...state, 

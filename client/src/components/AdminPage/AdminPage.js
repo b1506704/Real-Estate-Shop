@@ -20,19 +20,19 @@ const AdminPage = ({userName}) => {
                         <Footer/>
                     </Route>
                     <Route path="/edit_category">
-                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <HeadingTitle title="Quản Lý Danh Mục Nhà" subtitle="Trang thêm, xóa, sửa danh mục"/>
                         <NavBar userName={userName} userMode="admin"/>
                         <EditHouseCategory/>
                         <Footer/>
                     </Route>
                     <Route path="/edit_house">
-                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <HeadingTitle title="Quản Lý Nhà Bán" subtitle="Trang thêm, xóa, sửa thông tin nhà"/>
                         <NavBar userName={userName} userMode="admin"/>
                         <EditHouseList/>
                         <Footer/>
                     </Route>
                     <Route path="/edit_user">
-                        <HeadingTitle title="Admin Page" subtitle="Trang quản lý database"/>
+                        <HeadingTitle title="Quản Lý Người Dùng" subtitle="Trang thêm, xóa, sửa người dùng"/>
                         <NavBar userName={userName} userMode="admin"/>
                         <EditUser/>
                         <Footer/>

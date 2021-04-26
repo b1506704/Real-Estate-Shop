@@ -4,9 +4,12 @@ import NavBar from '../NavBar/NavBar';
 import HeadingTitle from '../HeadingTitle/HeadingTitle';
 import HouseCategory from '../HouseCategory/HouseCategory';
 import HouseList from '../HouseList/HouseList';
+import SellHousePage from '../SellHousePage/SellHousePage';
 import HouseDetail from '../HouseDetail/HouseDetail';
+import SchedulePage from '../SchedulePage/SchedulePage';
 import Footer from '../Footer/Footer';
 import LoadingContainer from '../../utils/LoadingContainer/LoadingContainer';
+import InvitationPage from '../InvitationPage/InvitationPage';
 
 const UserPage = ({user}) => {
     return(
@@ -24,12 +27,15 @@ const UserPage = ({user}) => {
                         <Route path="/schedule">
                             <HeadingTitle title="Chi tiết lịch hẹn" subtitle="Vui lòng xét duyệt lịch hẹn"/>
                             <NavBar userName={user.userName} userMode="user"/>
+                            <SchedulePage/>
+                            <InvitationPage/>
                             <Footer/>
                         </Route>
                         <Route exact path="/house">
                             <HeadingTitle title="Danh sách nhà bán" subtitle="Chọn đặt lịch hẹn để liên hệ người bán"/>
                             <NavBar userName={user.userName} userMode="user"/>
                             <HouseList/>
+                            <SellHousePage/>
                             <Footer/>
                         </Route>
                         <Route path="/house/:id">

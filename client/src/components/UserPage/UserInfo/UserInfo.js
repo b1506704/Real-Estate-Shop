@@ -101,7 +101,7 @@ const UserInfo = () => {
                                 </select>
                             </div>
                             <div> Giá: &nbsp;
-                                <input ref={houseInputRef.priceRef} required minLength={1} min={0} type="number" placeholder="Tỷ VND"></input>
+                                <input ref={houseInputRef.priceRef} required minLength={1} min={0} type="number" placeholder="Tỷ VND" step=".01"></input>
                             </div>
                             <div> Diện Tích:&nbsp;
                                 <input ref={houseInputRef.area} required minLength={1} type="text"></input>

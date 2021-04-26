@@ -1,24 +1,41 @@
 import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import GoogleMap from '../../utils/GoogleMap/GoogleMap';
+import random from '../../utils/RandomNumber';
 import './HouseDetail.css';
+import { addSchedule, setNotification } from '../../actions/user_actions';
 
 const HouseDetail = () => {
+    const {id} = useParams();
+    const history = useHistory();
+    const dispatch = useDispatch();
     const modalRef = useRef();
     const dateRef = useRef(null);
-    const dispatch = useDispatch();
-    const {id} = useParams();
-    const userList = useSelector((state) => state.user_reducer.userList);
     const houseList = useSelector((state) => state.user_reducer.houseList);
+    const currentUser = useSelector((state) => state.user_reducer.login);
     const house = houseList.find((house) => house.id === id);
     const onSubmitSchedule = (e) => {
         e.preventDefault();
-
+        const date = new Date().toISOString().slice(0, 10);
+        if (dateRef.current.value < date) {
+            dispatch(setNotification("Vui lòng chọn ngày từ hôm nay"));    
+        } else {
+            const schedule = {
+                id: random(1,100000),
+                house: house,
+                date: dateRef.current.value,
+                creatorName: currentUser.userName,
+                creatorEmail: currentUser.email
+            }
+            dispatch(addSchedule(schedule));
+            history.push('/schedule');
+        }
     }
     useEffect(() => {
         scrollToModal();
-    });
+    },[]);
     const scrollToModal = () => {
         modalRef.current.scrollIntoView({
           behavior: "smooth",

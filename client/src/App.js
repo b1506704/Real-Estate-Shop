@@ -9,7 +9,7 @@ import AdminPage from './components/AdminPage/AdminPage';
 import HeadingTitle from './components/HeadingTitle/HeadingTitle';
 import LoadingContainer from './utils/LoadingContainer/LoadingContainer';
 import Footer from './components/Footer/Footer';
-import {fetchHouse, fetchBank, fetchCategory, fetchUser } from './actions/user_actions';
+import {fetchHouse, fetchBank, fetchCategory, fetchUser, fetchSchedule } from './actions/user_actions';
 import './App.css';
 
 const App = () => {
@@ -30,9 +30,9 @@ const App = () => {
         dispatch(fetchUser());
     },[title]);
     
-    // useEffect(()=> {
-    //     dispatch(fetchBank());
-    // },[title]);
+    useEffect(()=> {
+        dispatch(fetchSchedule());
+    },[title]);
 
     useEffect(()=> {
         dispatch(fetchCategory());

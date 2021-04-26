@@ -25,7 +25,7 @@ import Sacombank from '../../../assets/imgs/sacombank.jpeg'
 import Vietcombank  from '../../../assets/imgs/vietcombank.png';
 import avatar from '../../../assets/imgs/user.png';
 
-const Card = ({house, category, bank, user, type, mode}) => {
+const Card = ({house, category, schedule, invitation, bank, user, type, mode}) => {
     const history = useHistory();
     const houseInputRef = 
       {
@@ -227,11 +227,12 @@ const Card = ({house, category, bank, user, type, mode}) => {
       return (
         <div className="card_detail shadow">
           <div className="title_bar shadow">
-            { type === "house" ? house.message : type === "category" ? category.name : type ==="bank" ? '#' + bank.id : null }            
+            { type === "house" ? house.message : type === "category" ? category.name : type ==="schedule" ? schedule.date : type ==="invitation" ? invitation.date : null }            
           </div>
           { 
             type === "house" 
             ? <div className="house_info">
+                <div style={{color: "yellow"}}>Người bán:&nbsp; {house.houseSeller}</div>
                 <div> Thông điệp: &nbsp;
                   { isEditing === false ? house.message
                     : (<input ref={houseInputRef.message} type="text" placeholder={house.message}></input>)
@@ -252,9 +253,8 @@ const Card = ({house, category, bank, user, type, mode}) => {
                     : (<input ref={houseInputRef.priceRef} type="text" placeholder={house.price}></input>)
                   }
                 </div>
-                <div style={{color: "yellow"}}>Tình trạng: &nbsp;{house.isBought ? "Đã bán" : "Chưa bán"}</div>
-                <div style={{color: "yellow"}}>Người mua:&nbsp; {house.houseOwner}</div>
-                <div style={{color: "yellow"}}>Người bán:&nbsp; {house.houseSeller}</div>
+                {/* <div style={{color: "yellow"}}>Tình trạng: &nbsp;{house.isBought ? "Đã bán" : "Chưa bán"}</div>
+                <div style={{color: "yellow"}}>Người mua:&nbsp; {house.houseOwner}</div> */}
                 <div> Diện tích:&nbsp;
                 { isEditing === false ? house.area + " m2"
                   : (<input ref={houseInputRef.area} type="text" placeholder={house.area}></input>)
@@ -303,43 +303,68 @@ const Card = ({house, category, bank, user, type, mode}) => {
                   <div style={{color: "yellow"}}> Số nhà rao bán:&nbsp; {countCtgByName(category.name) || null}</div>
                   <div style={{color: "yellow"}}> Đã bán:&nbsp; {countCtgBySell(category.name) || null}</div>
                 </div>
-                : type === "bank"
-                  ? <div className="house_info">
-                      <div> Ngân hàng:&nbsp;
-                          { isEditing === false ? bank.provider
-                            : (<select ref={bankInputRef.providerRef}>
-                                { providerList != null 
-                                  ? providerList.map((ele, key) => (<option value={ele} key={key}>{ele}</option>))
-                                  : null
-                                }
-                              </select>)
-                          }
-                      </div>
-                      <div> Số dư: &nbsp;
-                          { isEditing === false ? bank.value + " Tỷ VND"
-                            : (<select ref={bankInputRef.valueRef}>
-                                { bankValueList != null 
-                                  ? bankValueList.map((ele, key) => (<option value={ele} key={key}>{ele}</option>))
-                                  : null
-                                }
-                              </select>)
-                          }
-                      </div>
-                      <div> Chủ sở hữu: &nbsp;
-                          { isEditing === false ? bank.owner
-                            : null
-                          }
-                      </div>
-                      <div style={{color: "yellow"}}> Tình trạng:&nbsp;  {bank.isOwned ? "Đã liên kết" : "Chưa liên kết" }</div>
-                    </div>
-                    : null   
+            : type === "category" 
+              ? <div className="house_info">
+                  <div> Loại nhà:
+                    { isEditing === false ? category.name
+                    : (<input ref={categoryInputRef.nameRef} type="text" placeholder={category.name}></input>)
+                    }
+                  </div>
+                  <div style={{color: "yellow"}}> Số nhà rao bán:&nbsp; {countCtgByName(category.name) || null}</div>
+                  <div style={{color: "yellow"}}> Đã bán:&nbsp; {countCtgBySell(category.name) || null}</div>
+                </div>
+            : type === "schedule"
+            ? <div className="house_info">
+                <div style={{color: "yellow"}}> Tên Người Hẹn: &nbsp;
+                    {schedule.house.houseSeller}
+                </div>
+                <div style={{color: "yellow"}}> Tình trạng: &nbsp;
+                    {schedule.isMarked === false ? "Đợi phản hồi" : "Chấp nhận"}
+                </div>
+                <div> Mô tả :&nbsp;
+                    { schedule.house.message }
+                </div>
+                <div> Ngày Hẹn: &nbsp;
+                    {schedule.date}
+                </div>
+                <div> Địa điểm: &nbsp;
+                    {schedule.house.address}
+                </div>
+                <div>
+                    <GoogleMap lat={schedule.house.lat} lng={schedule.house.lng}/>
+                </div>
+
+              </div>
+              : type === "invitation"
+              ? <div className="house_info">
+                  <div style={{color: "yellow"}}> Người Đặt Lịch: &nbsp;
+                      {invitation.creatorName}
+                  </div>
+                  <div style={{color: "yellow"}}> Liên lạc: &nbsp;
+                      {invitation.creatorEmail}
+                  </div>
+                  <div> Mô tả :&nbsp;
+                      { invitation.house.message }
+                  </div>
+                  <div> Ngày Hẹn: &nbsp;
+                      {invitation.date}
+                  </div>
+                  <div> Địa điểm: &nbsp;
+                      {invitation.house.address}
+                  </div>
+                  <div>
+                      <GoogleMap lat={invitation.house.lat} lng={invitation.house.lng}/>
+                  </div>
+  
+                </div>
+            : null   
           }
           {
             mode === "view"
             ? <>
                 {
                   type === "house" ? <button type="button" className="card_button buy_button shadow neon" onClick={onCardSelect}> Đặt lịch hẹn </button>   
-                  : type === "category" ? <button type="button" className="card_button browse_button shadow" onClick={onCardSelect}></button>
+                  : type === "category" ? <button type="button" className="card_button browse_button shadow" onClick={onCardSelect}>Lọc</button>
                   : null   
                 } 
               </>
@@ -375,20 +400,16 @@ const Card = ({house, category, bank, user, type, mode}) => {
                 src={
                   currentImg || category.imgUrl
               }/>)   
-            : type === "bank" ?
+            : type === "schedule" ?
               (<img className="image" 
                 alt="Loading..." 
-                src={
-                  bank.provider === "BIDV" 
-                ? BIDV
-                : bank.provider === "Agribank"
-                ? Agribank
-                : bank.provider === "Sacombank"
-                ? Sacombank
-                : bank.provider === "Vietcombank"
-                ? Vietcombank
-                : null
-              }/>)  
+                src={schedule.house.imgUrl}                  
+              />)  
+            : type === "invitation" ?
+            (<img className="image" 
+              alt="Loading..." 
+              src={invitation.house.imgUrl}                  
+            />)  
             : (<LoadingContainer style="spinner"/>)
             }
           </div>

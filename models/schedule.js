@@ -4,9 +4,12 @@ const scheduleSchema = mongoose.Schema({
         type: String,
         unique: true
     },
-    house: String,
+    house: {
+        type: Object,
+        unique: true
+    },
     date: {
-        type: Date
+        type: String
     },
     creatorName: {
         type: String,

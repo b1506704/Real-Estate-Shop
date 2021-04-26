@@ -325,7 +325,7 @@ export const addSchedule = (scheduleInfo) => async (dispatch) => {
     await dispatch(fetchSchedule());
     await dispatch(setNotification("Đặt lịch hoàn tất"));
   } catch (error) {
-    dispatch(setNotification("Đặt lịch thất bại"));
+    dispatch(setNotification("Trùng lịch!"));
   }
 };
 

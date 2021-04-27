@@ -7,12 +7,10 @@ import GoogleMap from '../../../utils/GoogleMap/GoogleMap';
 import {
   filterHouse, 
   deleteHouse, 
-  deleteBank, 
   deleteCategory, 
   setNotification,
   updateHouse,
   updateCategory,
-  updateBank,
   deleteUser,
   updateUser,
   markSchedule,
@@ -24,6 +22,7 @@ import './Card.css';
 import avatar from '../../../assets/imgs/user.png';
 
 const Card = ({house, category, schedule, invitation, bank, user, type, mode}) => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const houseInputRef = 
       {
@@ -49,14 +48,7 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
         fullName: useRef(null),
         email: useRef(null),
       };
-    const bankInputRef = 
-    {
-      providerRef: useRef(null),
-      ownerRef: useRef(null),
-      valueRef: useRef(null),
-    };
     
-    const dispatch = useDispatch();
     const [isEditing, setIsEditing] = useState(false);
     const [currentImg, setCurrentImg] = useState(null);
     const currentLoginUser = useSelector((state) => state.user_reducer.login);
@@ -125,13 +117,6 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
           };
           dispatch(updateCategory(category.name, updatedCategory))
           .then(() => setIsEditing(false));
-      } else if (type === "bank") {
-          const updatedBank = {
-            provider: bankInputRef.providerRef.current.value,
-            value: bankInputRef.valueRef.current.value,
-          };
-          dispatch(updateBank(bank.id, updatedBank))
-          .then(() => setIsEditing(false));
       } else if (type === "user") {
         const updatedUser = {
           userName:  userInputRef.userName.current.value || user.userName,
@@ -150,8 +135,6 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
     const onCardDelete = () => {
       if (type === "house") {
         dispatch(deleteHouse(house.id));
-      } else if (type === "bank") {
-        dispatch(deleteBank(bank.id));
       } else if (type === "category") {
         dispatch(deleteCategory(category.name));
       } else if (type === "user") {

@@ -12,11 +12,6 @@ import {
   FILTER_HOUSE_BY_PRICE,
   CREATE_HOUSE,
   UPDATE_HOUSE,
-  ADD_BANK,
-  FETCH_BANK,
-  DELETE_BANK,
-  CREATE_BANK,
-  UPDATE_BANK,
   ADD_SCHEDULE,
   REJECT_SCHEDULE,
   DELETE_SCHEDULE,
@@ -117,16 +112,6 @@ export const register = (userInfo) => async (dispatch) => {
     await dispatch(setIsLoading(false));
   } catch (error) {
     dispatch(setNotification("Đăng ký thất bại"));
-  }
-};
-
-export const addBank = (userName, bankInfo) => async (dispatch) => {
-  try {
-    const { data } = await api.addBank(userName, bankInfo);
-    await dispatch({ type: ADD_BANK, payload: data});
-    await dispatch(setNotification("Cập nhật thành công"));
-  } catch (error) {
-    dispatch(setNotification("Cập nhật thất bại"));
   }
 };
 

@@ -7,6 +7,7 @@ import EditHouseList from '../EditHouseList/EditHouseList';
 import Footer from '../Footer/Footer';
 import './AdminPage.css';
 import EditUser from '../EditUser/EditUser';
+import EditSchedule from '../EditSchedule/EditSchedule';
 
 const AdminPage = ({userName}) => {
     return(
@@ -35,6 +36,12 @@ const AdminPage = ({userName}) => {
                         <HeadingTitle title="Quản Lý Người Dùng" subtitle="Trang thêm, xóa, sửa người dùng"/>
                         <NavBar userName={userName} userMode="admin"/>
                         <EditUser/>
+                        <Footer/>
+                    </Route>
+                    <Route path="/edit_schedule">
+                        <HeadingTitle title="Quản Lý Lịch Hẹn" subtitle="Trang duyệt lịch hẹn"/>
+                        <NavBar userName={userName} userMode="admin"/>
+                        <EditSchedule/>
                         <Footer/>
                     </Route>
                 </Switch>

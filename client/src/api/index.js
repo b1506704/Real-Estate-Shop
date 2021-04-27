@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-const userUrl = 'https://real-estate-shop.herokuapp.com/users';
-const houseUrl = 'https://real-estate-shop.herokuapp.com/houses';
-const categoryUrl = 'https://real-estate-shop.herokuapp.com/categories';
-const bankUrl = 'https://real-estate-shop.herokuapp.com/banks';
-const scheduleUrl = 'https://real-estate-shop.herokuapp.com/schedules';
+// const userUrl = 'https://real-estate-shop.herokuapp.com/users';
+// const houseUrl = 'https://real-estate-shop.herokuapp.com/houses';
+// const categoryUrl = 'https://real-estate-shop.herokuapp.com/categories';
+// const bankUrl = 'https://real-estate-shop.herokuapp.com/banks';
+// const scheduleUrl = 'https://real-estate-shop.herokuapp.com/schedules';
 
-// const userUrl = 'http://localhost:80/users';
-// const houseUrl = 'http://localhost:80/houses';
-// const categoryUrl = 'http://localhost:80/categories';
-// const bankUrl = 'http://localhost:80/banks';
-// const scheduleUrl = 'http://localhost:80/schedules';
+const userUrl = 'http://localhost:80/users';
+const houseUrl = 'http://localhost:80/houses';
+const categoryUrl = 'http://localhost:80/categories';
+const bankUrl = 'http://localhost:80/banks';
+const scheduleUrl = 'http://localhost:80/schedules';
 
 
 // user routes
@@ -42,6 +42,7 @@ export const updateCategory = (name, toUpdateCategory) => axios.post(`${category
 // schedule
 export const fetchSchedule = () => axios.get(scheduleUrl);
 export const addSchedule = (scheduleInfo) => axios.post(scheduleUrl, scheduleInfo);
-export const rejectSchedule = (id) => axios.post(`${scheduleUrl}/rejectSchedule/`, id);
-export const acceptSchedule = (id) => axios.post(`${scheduleUrl}/acceptSchedule/`, id);
+export const rejectSchedule = (id) => axios.post(`${scheduleUrl}/rejectSchedule/${id}`);
+export const acceptSchedule = (id) => axios.post(`${scheduleUrl}/markSchedule/${id}`);
 export const deleteSchedule = (id) => axios.delete(`${scheduleUrl}/${id}`);    
+export const removeSchedule = (id) => axios.delete(`${scheduleUrl}/removeSchedule/${id}`);    

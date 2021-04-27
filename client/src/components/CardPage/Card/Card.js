@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import LoadingContainer from '../../../utils/LoadingContainer/LoadingContainer';
 import GoogleMap from '../../../utils/GoogleMap/GoogleMap';
 import {
-  addSchedule, 
   filterHouse, 
   deleteHouse, 
   deleteBank, 
@@ -14,15 +13,14 @@ import {
   updateHouse,
   updateCategory,
   updateBank,
-  getUser,
   deleteUser,
-  updateUser
+  updateUser,
+  markSchedule,
+  rejectSchedule,
+  deleteSchedule,
+  removeSchedule
 } from '../../../actions/user_actions';
 import './Card.css';
-import BIDV from '../../../assets/imgs/bidv.jpg'; 
-import Agribank from '../../../assets/imgs/agribank.png'
-import Sacombank from '../../../assets/imgs/sacombank.jpeg'
-import Vietcombank  from '../../../assets/imgs/vietcombank.png';
 import avatar from '../../../assets/imgs/user.png';
 
 const Card = ({house, category, schedule, invitation, bank, user, type, mode}) => {
@@ -64,8 +62,6 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
     const currentLoginUser = useSelector((state) => state.user_reducer.login);
     const currentCategory = useSelector((state) => state.user_reducer.categoryList);
     const currentHouse = useSelector((state) => state.user_reducer.houseList);
-    const providerList = ["Agribank","BIDV","Sacombank","Vietcombank"];   
-    const bankValueList = [2, 5, 10, 20, 100];   
     
     const countCtgByName = (name) => {
       if (currentHouse) {
@@ -100,8 +96,6 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
           dispatch(setNotification("Cần đăng nhập để sử dụng chức năng này!"));
         } else {
           history.push(`house/${house.id}`);
-          // dispatch(addSchedule(currentLoginUser.userName, house))
-          // .then(() => dispatch(getUser(currentLoginUser.userName)));
         } 
       }
     }
@@ -164,6 +158,18 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
         dispatch(deleteUser(user.userName));
       }
     }
+    const onScheduleConfirm = () => {
+      dispatch(markSchedule(invitation.id));
+    }
+    const onScheduleReject = () => {
+      dispatch(rejectSchedule(invitation.id));
+    }
+    const onScheduleDelete = () => {
+      dispatch(deleteSchedule(schedule.id));
+    }
+    const onScheduleRemove = () => {
+      dispatch(removeSchedule(schedule.id));
+    }
 
     if (type === "user") {
       return (
@@ -204,20 +210,20 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
           <>
                 { isEditing === false 
                   ? (<button type="button" className="card_button edit_button shadow" onClick={onCardEdit}>
-                      
+                      Sửa
                     </button>) 
                   : <>
                     
                     <button type="button" className="card_button cancel_button shadow" onClick={onCardCancel}>
-                      
+                      Hủy
                     </button>
                     <button type="button" className="card_button save_button shadow" onClick={onCardUpdate}>
-                      
+                      Lưu  
                     </button>
                     </>
                 }
                 <button type="button" className="card_button delete_button shadow" onClick={onCardDelete}>
-                           
+                  Xóa   
                 </button>
           </> 
         </div>
@@ -233,6 +239,12 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
             type === "house" 
             ? <div className="house_info">
                 <div style={{color: "yellow"}}>Người bán:&nbsp; {house.houseSeller}</div>
+                  {
+                    mode === "edit" ? <>
+                      <div style={{color: "yellow"}}>Tình trạng: &nbsp;{house.isBought ? "Đã bán" : "Chưa bán"}</div>
+                      <div style={{color: "yellow"}}>Người mua:&nbsp; {house.houseOwner}</div>
+                    </> : null
+                  }
                 <div> Thông điệp: &nbsp;
                   { isEditing === false ? house.message
                     : (<input ref={houseInputRef.message} type="text" placeholder={house.message}></input>)
@@ -253,8 +265,6 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
                     : (<input ref={houseInputRef.priceRef} type="text" placeholder={house.price}></input>)
                   }
                 </div>
-                {/* <div style={{color: "yellow"}}>Tình trạng: &nbsp;{house.isBought ? "Đã bán" : "Chưa bán"}</div>
-                <div style={{color: "yellow"}}>Người mua:&nbsp; {house.houseOwner}</div> */}
                 <div> Diện tích:&nbsp;
                 { isEditing === false ? house.area + " m2"
                   : (<input ref={houseInputRef.area} type="text" placeholder={house.area}></input>)
@@ -280,10 +290,10 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
                   : <>
                       <input ref={houseInputRef.address} type="text" placeholder={house.address}></input>
                       <div> Lat: 
-                        <input ref={houseInputRef.lat} type="number" min={-90} max={90} placeholder={house.lat}></input>
+                        <input ref={houseInputRef.lat} type="number" min={-90} max={90} placeholder={house.lat} step=".01"></input>
                       </div>
                       <div> Lng: 
-                        <input ref={houseInputRef.lng} type="number" min={-180} max={180} placeholder={house.lng}></input>
+                        <input ref={houseInputRef.lng} type="number" min={-180} max={180} placeholder={house.lng} step=".01"></input>
                       </div>
                       <div>
                         <GoogleMap lat={house.lat} lng={house.lng}/>
@@ -303,23 +313,13 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
                   <div style={{color: "yellow"}}> Số nhà rao bán:&nbsp; {countCtgByName(category.name) || null}</div>
                   <div style={{color: "yellow"}}> Đã bán:&nbsp; {countCtgBySell(category.name) || null}</div>
                 </div>
-            : type === "category" 
-              ? <div className="house_info">
-                  <div> Loại nhà:
-                    { isEditing === false ? category.name
-                    : (<input ref={categoryInputRef.nameRef} type="text" placeholder={category.name}></input>)
-                    }
-                  </div>
-                  <div style={{color: "yellow"}}> Số nhà rao bán:&nbsp; {countCtgByName(category.name) || null}</div>
-                  <div style={{color: "yellow"}}> Đã bán:&nbsp; {countCtgBySell(category.name) || null}</div>
-                </div>
             : type === "schedule"
             ? <div className="house_info">
                 <div style={{color: "yellow"}}> Tên Người Hẹn: &nbsp;
                     {schedule.house.houseSeller}
                 </div>
                 <div style={{color: "yellow"}}> Tình trạng: &nbsp;
-                    {schedule.isMarked === false ? "Đợi phản hồi" : "Chấp nhận"}
+                    {schedule.status === 'waiting' ? "Đợi phản hồi" : schedule.status === 'accept' ? "Chấp nhận" : schedule.status === 'reject' ? "Từ Chối" : null}
                 </div>
                 <div> Mô tả :&nbsp;
                     { schedule.house.message }
@@ -368,10 +368,11 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
                   : null   
                 } 
               </>
-            : <>
+            : 
+            mode === "edit" ? <>
                 { isEditing === false 
                   ? (<button type="button" className="card_button edit_button shadow" onClick={onCardEdit}>
-                      
+                      Sửa
                     </button>) 
                   : <>
                     { type === "bank" ? null : (<div className="card_button base64_button shadow">
@@ -379,17 +380,37 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
                       <FileBase className="base64"  type="file" multiple={false} onDone = {({base64}) => {setCurrentImg(base64)}}></FileBase>  
                     </div>)}
                     <button type="button" className="card_button cancel_button shadow" onClick={onCardCancel}>
-                      
+                      Hủy
                     </button>
                     <button type="button" className="card_button save_button shadow" onClick={onCardUpdate}>
-                      
+                      Lưu
                     </button>
                     </>
                 }
                 <button type="button" className="card_button delete_button shadow" onClick={onCardDelete}>
-                             
+                  Xóa       
                 </button>
               </>
+            : mode === "confirm_schedule" ?
+            <>
+              <button type="button" className="card_button confirm_button shadow" onClick={onScheduleConfirm}>
+                Đồng ý
+              </button>
+              <button type="button" className="card_button reject_button shadow" onClick={onScheduleReject}>
+                Từ Chối
+              </button>
+            </>
+            : mode === "edit_schedule" ?
+            <>
+              <button type="button" className="card_button confirm_button shadow" onClick={onScheduleDelete}>
+                Duyệt
+              </button>
+              <button type="button" className="card_button delete_button shadow" onClick={onScheduleRemove}>
+                Xóa
+              </button>
+            </>
+            : null
+
           }
           <div className="image_container">
             { type === "house" && (house.imgUrl || currentImg) ? 

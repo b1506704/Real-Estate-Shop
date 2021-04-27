@@ -10,11 +10,6 @@ import {
   FILTER_HOUSE,
   UPDATE_HOUSE,
   FILTER_HOUSE_BY_PRICE,
-  ADD_BANK,
-  CREATE_BANK,
-  FETCH_BANK,
-  DELETE_BANK,
-  UPDATE_BANK,
   CREATE_CATEGORY,
   FETCH_CATEGORY,
   DELETE_CATEGORY,
@@ -27,7 +22,8 @@ import {
   DELETE_SCHEDULE,
   GET_SCHEDULE,
   DELETE_USER,
-  UPDATE_USER
+  UPDATE_USER,
+  IS_LOADING
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -83,16 +79,6 @@ export default (state = {}, action) => {
             ...state, 
                 houseList: state.houseList.filter((house) => house.price === action.payload)
         }
-    case FETCH_BANK:
-        return { ...state, bankList: action.payload}
-    case DELETE_BANK:
-        return { ...state, deleteBank: action.payload }
-    case CREATE_BANK:
-        return { ...state, createdBank: action.payload }        
-    case UPDATE_BANK:
-        return { ...state, updatedBank: action.payload}            
-    case ADD_BANK:
-        return { ...state, credit: action.payload}
     case FETCH_CATEGORY:
         return { ...state, categoryList: action.payload}
     case DELETE_CATEGORY:
@@ -105,6 +91,8 @@ export default (state = {}, action) => {
         return { ...state, notif: action.payload}
     case SHOW_USER_INFO:
         return { ...state, isShowUserInfo: action.payload}
+    case IS_LOADING:
+        return { ...state, isLoading: action.payload}
     default:
         return state;
   }

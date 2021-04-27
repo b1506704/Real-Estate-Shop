@@ -5,8 +5,7 @@ const scheduleSchema = mongoose.Schema({
         unique: true
     },
     house: {
-        type: Object,
-        unique: true
+        type: Object
     },
     date: {
         type: String
@@ -17,9 +16,9 @@ const scheduleSchema = mongoose.Schema({
     creatorEmail: {
         type: String,
     },
-    isMarked: {
-        type: Boolean,
-        default: false,
+    status: {
+        type: String,
+        default: 'waiting',
     },
 });
 

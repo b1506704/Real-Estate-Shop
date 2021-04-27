@@ -14,6 +14,7 @@ const HouseDetail = () => {
     const modalRef = useRef();
     const dateRef = useRef(null);
     const houseList = useSelector((state) => state.user_reducer.houseList);
+    const scheduleList = useSelector((state) => state.user_reducer.scheduleList);
     const currentUser = useSelector((state) => state.user_reducer.login);
     const house = houseList.find((house) => house.id === id);
     const onSubmitSchedule = (e) => {
@@ -29,7 +30,12 @@ const HouseDetail = () => {
                 creatorName: currentUser.userName,
                 creatorEmail: currentUser.email
             }
+            // const found = scheduleList.some((s) => s.id != schedule.id);
+            // if (scheduleList.length === 0){
             dispatch(addSchedule(schedule));
+            // } else {
+                // dispatch(setNotification("Bạn đã đặt lịch với người này!"));    
+            // }
             history.push('/schedule');
         }
     }

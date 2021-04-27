@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Card from './Card/Card';
 import LoadingContainer from '../../utils/LoadingContainer/LoadingContainer';
-import {createHouse, createCategory, fetchCategory, fetchUser, fetchHouse, setNotification, filterHouseByPrice, register, fetchSchedule } from '../../actions/user_actions';
+import {createHouse, createCategory, fetchCategory, fetchUser, fetchHouse, setNotification, filterHouseByPrice, register, fetchSchedule, setIsLoading } from '../../actions/user_actions';
 import random from '../../utils/RandomNumber';
 import './CardPage.css';
 
@@ -47,8 +47,11 @@ const CardPage = ({context}) => {
     }
 
     const loadCategory = () => {
+        dispatch(setIsLoading(true));
         dispatch(fetchCategory())
-        .then(() => dispatch(setNotification("Làm mới thành công")));
+        .then(() => dispatch(setNotification("Làm mới thành công")))
+        .then(() => dispatch(setIsLoading(false)));
+        
     }
 
     const addUser = () => {
@@ -63,18 +66,24 @@ const CardPage = ({context}) => {
     }
 
     const loadUser = () => {
+        dispatch(setIsLoading(true));
         dispatch(fetchUser())
-        .then(() => dispatch(setNotification("Làm mới thành công")));
+        .then(() => dispatch(setNotification("Làm mới thành công")))
+        .then(() => dispatch(setIsLoading(false)));
     }
 
     const loadHouse = () => {
+        dispatch(setIsLoading(true));
         dispatch(fetchHouse())
-        .then(() => dispatch(setNotification("Làm mới thành công")));
+        .then(() => dispatch(setNotification("Làm mới thành công")))
+        .then(() => dispatch(setIsLoading(false)));
     }
 
     const loadSchedule = () => {
+        dispatch(setIsLoading(true));
         dispatch(fetchSchedule())
-        .then(() => dispatch(setNotification("Làm mới thành công")));
+        .then(() => dispatch(setNotification("Làm mới thành công")))
+        .then(() => dispatch(setIsLoading(false)));
     }
     
     const searchByPrice = (e) => {
@@ -114,10 +123,6 @@ const CardPage = ({context}) => {
                 <div className="card_page">
                     <div className="card_header"> <b>Tin Đã Đăng</b> 
                         <button type="button" className="card_menu_button refresh_button_user shadow" onClick={loadHouse}></button>
-                        {/* <form onSubmit={(e) => searchByPrice(e)}>
-                            <input type="text" ref={searchInput} className="shadow" placeholder="Tìm theo giá"></input>
-                            <input type="submit" className="shadow"></input>
-                        </form> */}
                     </div>
                     <div className="card_container">
                         {
@@ -191,7 +196,8 @@ const CardPage = ({context}) => {
                     <div className="card_container">
                         {
                             userList != null && userList.length != 0 ?
-                            userList.map ((item,key) => 
+                            userList.filter((user) => user.userName != 'admin')
+                            .map ((item,key) => 
                             (<Card key={key} user={item} type={"user"} mode={"edit"}/>))
                             : <LoadingContainer style={'spinner'}/>
                         }
@@ -215,6 +221,22 @@ const CardPage = ({context}) => {
                     </div>
                 </div>
         );
+        case "edit_schedule":
+            return(
+                <div className="card_page">
+                    <div className="card_header"> <b>Quản Lý Lịch Hẹn ({scheduleList ? scheduleList.length : 0})</b> 
+                        <button type="button" className="card_menu_button refresh_button shadow" onClick={loadSchedule}></button>
+                    </div>
+                    <div className="card_container">
+                        {
+                            scheduleList != null && scheduleList.length != 0 ?
+                            scheduleList.map ((item,key) => 
+                            (<Card key={key} schedule={item} type={"schedule"} mode={"edit_schedule"}/>))
+                            : <LoadingContainer style={'spinner'}/>
+                        }
+                    </div>
+                </div>
+        );
         case "invitation":
             return(
                 <div className="card_page">
@@ -226,7 +248,7 @@ const CardPage = ({context}) => {
                             scheduleList != null && scheduleList.length != 0 ?
                             scheduleList.filter((schedule) => schedule.house.houseSeller === currentUser.userName)
                             .map ((item,key) => 
-                            (<Card key={key} invitation={item} type={"invitation"} mode={"view"}/>))
+                            (<Card key={key} invitation={item} type={"invitation"} mode={"confirm_schedule"}/>))
                             : <LoadingContainer style={'spinner'}/>
                         }
                     </div>

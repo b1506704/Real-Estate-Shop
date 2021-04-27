@@ -51,8 +51,9 @@
   opacity: 0.3;
   bottom: 3vh;
   border-style: none;
+  text-align: center ;
+  background-position: left 15% center;
   background-size: contain;
-  background-position: center center;
   background-repeat: no-repeat;
   color: rgb(0, 0, 0);
   font-size: 25px;
@@ -66,13 +67,17 @@
 }
 
 .browse_button {
-  background-position: left 15% center !important;
-  text-align: center !important;
   background: url("../../../assets/imgs/filter.png");
 }
+.confirm_button {
+  bottom: 23vh !important;
+  background: url("../../../assets/imgs/tick.png");
+}
+.reject_button {
+  bottom: 30vh !important;
+  background: url("../../../assets/imgs/cancel.png");
+}
 .buy_button {
-  background-position: left 15% center !important;
-  text-align: center !important;
   background: url("../../../assets/imgs/schedule.png");
 }
 .edit_button {

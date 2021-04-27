@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useRef, useEffect } from 'react';
 import { Route, Switch} from 'react-router-dom';
 import NavBar from '../NavBar/NavBar';
 import HeadingTitle from '../HeadingTitle/HeadingTitle';
@@ -12,8 +12,22 @@ import LoadingContainer from '../../utils/LoadingContainer/LoadingContainer';
 import InvitationPage from '../InvitationPage/InvitationPage';
 
 const UserPage = ({user}) => {
+    const modalRef = useRef(null);
+
+    const scrollToModal = () => {
+        modalRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start", 
+          inline: "nearest"
+        });
+      };
+      useEffect(() => {
+        scrollToModal();
+    },[]);
+
     return(
         <div>
+            <div ref={modalRef} className="scroll_position_holder"></div>
             <main>
                 <Suspense fallback={<LoadingContainer/>}>
                     <Switch>

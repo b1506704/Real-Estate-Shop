@@ -1,7 +1,7 @@
 import express from 'express';
 
 import Schedule from '../models/schedule.js';
-
+import House from '../models/house.js';
 const router = express.Router();
 
 export const getSchedules = async (req, res) => { 
@@ -14,7 +14,30 @@ export const getSchedules = async (req, res) => {
 }
 
 export const deleteSchedule = async (req, res) => { 
+    
     const { id } = req.params;
+    //delete marked schedule, set house.isBought = true
+    try {
+        const schedule = await Schedule.findOne({id: id});
+        const house = await House.findOne({id: schedule.house.id});
+        const updatedHouse = await House.findOneAndUpdate(
+            {id: house.id},
+            {
+                isBought: true,
+                houseOwner: schedule.creatorName
+            },
+            {new: true}
+        );
+        const deletedSchedule = await Schedule.findOneAndDelete({id: id});
+        res.status(200).json(deletedSchedule);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+export const removeSchedule = async (req, res) => { 
+    
+    const { id } = req.params;
+    //delete schedule from db regardless of constraint
     try {
         const schedule = await Schedule.findOneAndDelete({id: id});
         res.status(200).json(schedule);
@@ -34,12 +57,12 @@ export const createSchedule = async (req, res) => {
     }
 }
 export const markSchedule = async (req, res) => { 
-    const { id } = req.body;
+    // const { id } = req.body;
     try {
-        const schedule = await Schedule.findOne({id});
+        const schedule = await Schedule.findOne({id: req.params.id});
         const updatedSchedule = await Schedule.findOneAndUpdate(
             {id: schedule.id},
-            {isMarked: true} , 
+            {status: 'accept'} , 
             {new: true}
         );
         res.status(200).json(updatedSchedule);
@@ -48,12 +71,12 @@ export const markSchedule = async (req, res) => {
     }
 }
 export const rejectSchedule = async (req, res) => { 
-    const { id } = req.body;
+    // const { id } = req.body;
     try {
-        const schedule = await Schedule.findOne({id});
+        const schedule = await Schedule.findOne({id: req.params.id});
         const updatedSchedule = await Schedule.findOneAndUpdate(
             {id: schedule.id},
-            {isMarked: false} , 
+            {status: 'reject'} , 
             {new: true}
         );
         res.status(200).json(updatedSchedule);

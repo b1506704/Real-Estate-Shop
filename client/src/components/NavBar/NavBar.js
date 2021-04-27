@@ -8,6 +8,7 @@ import Notification from './Notification/Notification';
 import UserInfo from '../UserPage/UserInfo/UserInfo';
 import {logout, setNotification} from '../../actions/user_actions';
 import './NavBar.css';
+import LoadingContainer from '../../utils/LoadingContainer/LoadingContainer';
 
 const NavBar = ({userMode, userName}) => {
     const dispatch = useDispatch();
@@ -17,9 +18,12 @@ const NavBar = ({userMode, userName}) => {
     const [isRegisterPageOpen, setIsRegisterPageOpen] = useState(false);
     const currentUserInfo = useSelector ((state) => state.user_reducer.login);
     const currentNotif = useSelector((state) => state.user_reducer.notif);
+    const isLoading = useSelector((state) => state.user_reducer.isLoading);
     return(
-        <header>
-            <h1>Real <br></br>Estate<br></br> Service</h1>
+        <header className="shadow">
+            {isLoading && <LoadingContainer style="spinner"/>}
+            {isLoading === true ? null : <h1>Real <br></br>Estate<br></br> Service</h1>}
+            
             <nav>
                 {
                     userMode === "admin" || userMode === "user" 
@@ -46,6 +50,7 @@ const NavBar = ({userMode, userName}) => {
                         <a className="user_nav neon">| {userName} |</a>
                         <a className="edit_category_nav" onClick={() => history.push('/edit_category')}>Loại Nhà</a>
                         <a className="edit_house_nav" onClick={()=> history.push('/edit_house')}>Nhà</a>
+                        <a className="schedule_nav" onClick={()=> history.push('/edit_schedule')}>Lịch Hẹn</a>
                         <a className="edit_user_nav" onClick={()=> history.push('/edit_user')}>Người Dùng</a>
 
                     </>

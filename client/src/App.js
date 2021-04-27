@@ -9,7 +9,7 @@ import AdminPage from './components/AdminPage/AdminPage';
 import HeadingTitle from './components/HeadingTitle/HeadingTitle';
 import LoadingContainer from './utils/LoadingContainer/LoadingContainer';
 import Footer from './components/Footer/Footer';
-import {fetchHouse, fetchBank, fetchCategory, fetchUser, fetchSchedule } from './actions/user_actions';
+import {fetchHouse, fetchCategory, fetchUser, fetchSchedule, setIsLoading } from './actions/user_actions';
 import './App.css';
 
 const App = () => {
@@ -23,20 +23,12 @@ const App = () => {
 
 
     useEffect(()=> {
+        dispatch(setIsLoading(true));
         dispatch(fetchHouse());
-    },[title]);
-
-    useEffect(()=> {
         dispatch(fetchUser());
-    },[title]);
-    
-    useEffect(()=> {
         dispatch(fetchSchedule());
-    },[title]);
-
-    useEffect(()=> {
-        dispatch(fetchCategory());
-    },[title]);
+        dispatch(fetchCategory()).then(() => dispatch(setIsLoading(false)));
+    },[]);
     
     if (loginInfo!= null && loginInfo.isAdmin === true) {
         return (<AdminPage userName ={loginInfo.userName}/>);

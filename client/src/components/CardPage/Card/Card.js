@@ -51,7 +51,7 @@ const Card = ({house, category, schedule, invitation, bank, user, type, mode}) =
     
     const [isEditing, setIsEditing] = useState(false);
     const [currentImg, setCurrentImg] = useState(null);
-    const currentLoginUser = useSelector((state) => state.user_reducer.login);
+    const currentLoginUser = useSelector((state) => state.user_reducer.loggedInUser);
     const currentCategory = useSelector((state) => state.user_reducer.categoryList);
     const currentHouse = useSelector((state) => state.user_reducer.houseList);
     

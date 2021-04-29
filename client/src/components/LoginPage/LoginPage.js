@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import {login} from '../../actions/user_actions';
+import {login, setNewPassword, setNotification} from '../../actions/user_actions';
 import './LoginPage.css';
 
 const LoginPage = ({close}) => {
@@ -10,6 +10,12 @@ const LoginPage = ({close}) => {
         userName: '',
         passWord: '',
     });
+    const [newUserInfo, setNewUserInfo] = useState({
+        userName: '',
+        passWord: '',
+        question_1:''
+    });
+    const [isForget, setIsForget] = useState(false);
     const [isRemember, setIsRemember] = useState(false);
     const modalRef = useRef();
 
@@ -18,6 +24,12 @@ const LoginPage = ({close}) => {
             dispatch(login(userInfo));
         }
     },[userInfo, setUserInfo]);
+
+    useEffect(() => {
+        if (newUserInfo.userName && newUserInfo.passWord && newUserInfo.question_1) {
+            dispatch(setNewPassword(newUserInfo.userName, newUserInfo));
+        }
+    },[newUserInfo, setNewUserInfo]);
 
     useEffect(() => {
         scrollToModal();
@@ -33,24 +45,48 @@ const LoginPage = ({close}) => {
     return(
         <div className="login_container drop_shadow">
             <div ref={modalRef} className="scroll_position_holder"></div>
-            <h1>Đăng Nhập</h1>
+            <h1>{isForget ? "Quên Mật Khẩu" : "Đăng Nhập"}</h1>
             <form onSubmit={(e) => {
                     e.preventDefault();
-                    setUserInfo({userName: e.target.username.value, passWord:e.target.password.value});
+                    if (isForget === false) {
+                        setUserInfo({userName: e.target.username.value, passWord:e.target.password.value});
+                    } else {
+                        setNewUserInfo({userName: e.target.username.value, passWord:e.target.new_password.value, question_1:e.target.question_1.value});
+                        setIsForget(false);
+                        dispatch(setNotification("Đặt lại mật khẩu thành công"));
+                    }
                 }}>
                 <div>
                     <label>Tên Đăng Nhập:</label>
                     <input type="text" autoFocus={true} required minLength={1} maxLength={8} placeholder="<=8 ký tự" name="username"></input>
                 </div>
-                <div>
-                    <label>Mật Khẩu:</label>
-                    <input type="password" required minLength={1} maxLength={8} placeholder="<=8 ký tự" name="password"></input>
-                </div>
-                <div>
-                    <label>Nhớ Tài Khoản:</label>
-                    <input type="checkbox" name="remember_acc" onClick={() => setIsRemember(true)}></input>
-                    <a>Quên Mật Khẩu</a>
-                </div>
+                { isForget === false ? 
+                <>
+                    <div>
+                        <label>Mật Khẩu:</label>
+                        <input type="password" required minLength={1} maxLength={8} placeholder="<=8 ký tự" name="password"></input>
+                    </div>
+                    <div>
+                        <label>Nhớ Tài Khoản:</label>
+                        <input type="checkbox" name="remember_acc" onClick={() => setIsRemember(true)}></input>
+                        <a onClick={() => setIsForget(true)}>Quên Mật Khẩu</a>
+                    </div>
+                </> 
+                : 
+                <>
+                    <div>
+                        <label>Năm Sinh Cha:</label>
+                        <input type="text" require placeholder="18XX" name="question_1"></input>
+                    </div>
+                    <div>
+                        <label>Nhập Mật Khẩu Mới:</label>
+                        <input type="password" required minLength={1} maxLength={8} placeholder="<=8 ký tự" name="new_password"></input>
+                    </div>
+                    <div>
+                        <a onClick={() => setIsForget(false)}> || Trở Về ||</a>
+                    </div>
+                </>
+                }
                 <div className="button_container">
                     <input type="submit" className="drop_shadow" value="OK"></input>
                     <input type="button" className="drop_shadow" value="Thoát" onClick={close}></input>

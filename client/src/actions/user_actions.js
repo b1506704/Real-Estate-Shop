@@ -6,6 +6,7 @@ import {
   LOGOUT_USER,
   DELETE_USER,
   UPDATE_USER,
+  RESET_USER,
   FETCH_HOUSE,
   DELETE_HOUSE,
   FILTER_HOUSE,
@@ -32,12 +33,13 @@ export const login = (userInfo) => async (dispatch) => {
   try {
     await dispatch(setIsLoading(true));
     const { data } = await api.login(userInfo);
+    localStorage.setItem('user', JSON.stringify(data));
     await dispatch({ type: LOGIN_USER, payload: data});
+    await dispatch(setNotification("Đăng nhập thành công"));
     await dispatch(fetchSchedule());
     await dispatch(fetchUser());
     await dispatch(fetchHouse());
     await dispatch(fetchCategory());
-    await dispatch(setNotification("Đăng nhập thành công"));
     await dispatch(setIsLoading(false));
   } catch (error) {
     dispatch(setNotification("Đăng nhập thất bại"));
@@ -80,6 +82,19 @@ export const updateUser = (userName, userInfo) => async (dispatch) => {
   }
 };
 
+export const setNewPassword = (userName, newUserInfo) => async (dispatch) => {
+  try {
+    await dispatch(setIsLoading(true));
+    const { data } = await api.setNewPassword(userName, newUserInfo);
+    await dispatch({ type: RESET_USER, payload: data});
+    await dispatch(fetchUser());
+    await dispatch(setNotification("Cập nhật hoàn tất"));
+    await dispatch(setIsLoading(false));
+  } catch (error) {
+    dispatch(setNotification("Sai câu trả lời!"));
+  }
+};
+
 export const getUser = (userName) => async (dispatch) => {
   try {
     await dispatch(setIsLoading(true));
@@ -94,6 +109,7 @@ export const getUser = (userName) => async (dispatch) => {
 export const logout = (userInfo) => async (dispatch) => {
   try {
     await dispatch(setIsLoading(true));
+    localStorage.clear();
     const { data } = await api.logout(userInfo);
     await dispatch({ type: LOGOUT_USER, payload: data});
     await dispatch(setIsLoading(false));

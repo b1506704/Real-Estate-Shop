@@ -6,6 +6,7 @@ export const FETCH_USER = 'fetch_user';
 export const REGISTER_USER = 'register_user';
 export const DELETE_USER = 'delete_user';
 export const UPDATE_USER = 'update_user';
+export const RESET_USER = 'reset_user';
 // house actions
 export const FETCH_HOUSE = 'fetch_house';
 export const DELETE_HOUSE = 'delete_house';

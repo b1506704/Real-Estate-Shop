@@ -15,19 +15,19 @@ import './App.css';
 const App = () => {
     const dispatch = useDispatch();
     const storeState = useSelector ((state) => state.user_reducer);
-    const loginInfo = useSelector((state) => state.user_reducer.login);
+    const loginInfo = useSelector((state) => state.user_reducer.loggedInUser);
     const [title, setTitle] = useState("Dịch vụ mua bán bất động sản Real Estate");
     const [subTitle, setSubTitle] = useState("Giao dịch uy tín, nhanh chóng");
     
     console.log(storeState);
-
-
+    
+    
     useEffect(()=> {
         dispatch(setIsLoading(true));
         dispatch(fetchHouse());
         dispatch(fetchUser());
         dispatch(fetchSchedule());
-        dispatch(fetchCategory()).then(() => dispatch(setIsLoading(false)));
+        dispatch(fetchCategory()).then(() => dispatch(setIsLoading(false)));    
     },[]);
     
     if (loginInfo!= null && loginInfo.isAdmin === true) {

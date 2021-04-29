@@ -11,7 +11,7 @@ const CardPage = ({context}) => {
     const dispatch = useDispatch();
     const houseList = useSelector((state) => state.user_reducer.houseList);
     const userList = useSelector((state) => state.user_reducer.userList);
-    const currentUser = useSelector((state) => state.user_reducer.login);
+    const currentUser = useSelector((state) => state.user_reducer.loggedInUser);
     const categoryList = useSelector((state) => state.user_reducer.categoryList);
     const scheduleList = useSelector((state) => state.user_reducer.scheduleList);
     const searchInput = useRef(null);
@@ -20,7 +20,7 @@ const CardPage = ({context}) => {
         dispatch(
             createHouse(
                 {
-                    id: random(1,2000),  
+                    id: random(1,200000),  
                     price: random(1,200),
                     message: 'Cần bán gấp ',
                     category: categoryList !=null && categoryList.length!= 0 ? categoryList[random(0,  categoryList.length - 1)].name : null,
@@ -189,7 +189,7 @@ const CardPage = ({context}) => {
         case "edit_user":
             return(
                 <div className="card_page">
-                    <div className="card_header"> <b>Quản Lý Người Dùng ({userList ? userList.length : 0})</b> 
+                    <div className="card_header"> <b>Quản Lý Người Dùng ({userList ? userList.length-1 : 0})</b> 
                         <button type="button" className="card_menu_button add_button shadow" onClick={addUser}></button>
                         <button type="button" className="card_menu_button refresh_button shadow" onClick={loadUser}></button>
                     </div>

@@ -11,7 +11,8 @@ const RegisterPage = ({close}) => {
         passWord: '',
         fullName: '',
         gender: '',
-        email: ''
+        email: '',
+        question_1: ''
     });
     const modalRef = useRef();
 
@@ -43,7 +44,7 @@ const RegisterPage = ({close}) => {
                     if (userInfo.gender === '' || e.target.password.value != e.target.re_password.value ) {
                         dispatch(setNotification("Thông tin không hợp lệ!"));
                     } else {
-                        setUserInfo({...userInfo, userName: e.target.username.value, passWord:e.target.password.value, fullName: e.target.full_name.value, email: e.target.email.value});
+                        setUserInfo({...userInfo, userName: e.target.username.value, passWord:e.target.password.value, fullName: e.target.full_name.value, email: e.target.email.value, question_1: e.target.question_1.value});
                     }
                 }}>
                 <div>
@@ -85,6 +86,10 @@ const RegisterPage = ({close}) => {
                 <div>
                     <label>Email:</label>
                     <input type="text" required pattern="[A-Za-z0-9]+@gmail.com" placeholder="abc@gmail.com" name="email"></input>
+                </div>
+                <div>
+                    <label>Năm Sinh Cha:</label>
+                    <input type="text" require placeholder="18XX" name="question_1"></input>
                 </div>
                 <div className="button_container">
                     <input type="submit" className="shadow" value="OK"></input>

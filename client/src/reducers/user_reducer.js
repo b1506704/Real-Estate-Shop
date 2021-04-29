@@ -23,15 +23,17 @@ import {
   GET_SCHEDULE,
   DELETE_USER,
   UPDATE_USER,
+  RESET_USER,
   IS_LOADING
 } from '../constants/actionTypes';
 
-export default (state = {}, action) => {
+const loggedInUser = JSON.parse(localStorage.getItem('user'));
+export default (state = { loggedInUser }, action) => {
   switch (action.type) {
     case REGISTER_USER:
         return { ...state, register: action.payload }
     case LOGIN_USER:
-        return { ...state, login: action.payload }
+        return { ...state, loggedInUser: action.payload}
     case GET_USER:
         return { ...state, currentUser: action.payload }        
     case FETCH_USER:
@@ -42,8 +44,10 @@ export default (state = {}, action) => {
             }
     case UPDATE_USER:
         return { ...state, updatedUser: action.payload}            
+    case RESET_USER:
+        return { ...state, resetUser: action.payload}            
     case LOGOUT_USER:
-        return { ...state, login: action.payload}  
+        return { ...state, loggedInUser: action.payload}  
     case GET_SCHEDULE:
         return { ...state, scheduleList: action.payload }
     case ADD_SCHEDULE:

@@ -59,8 +59,8 @@ export const logout = async (req, res) => {
 }
 
 export const register = async (req, res) => {
-    const { userName, passWord, gender, fullName, email } = req.body;
-    const newUser = new User({ userName, passWord, gender, fullName, email });
+    const { userName, passWord, gender, fullName, email, question_1 } = req.body;
+    const newUser = new User({ userName, passWord, gender, fullName, email, question_1 });
 
     try {
         await newUser.save();
@@ -79,6 +79,25 @@ export const updateUser = async (req, res) => {
             {new: true}
         );
         res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
+export const setNewPassword = async (req, res) => { 
+    const { userName, passWord, question_1 } = req.body;
+    try {
+        const user = await User.findOne({userName: req.params.userName});
+        if (question_1 === user.question_1) {
+            const updatedUser = await User.findOneAndUpdate(
+                {userName: user.userName},
+                {userName, passWord} , 
+                {new: true}
+            );
+            res.status(200).json(updatedUser);
+        } else {
+            res.status(404).json("Incorrect Answer!");    
+        }
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

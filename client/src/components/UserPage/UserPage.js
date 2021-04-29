@@ -38,7 +38,7 @@ const UserPage = ({user}) => {
                             <HouseList/>
                             <Footer/>
                         </Route>
-                        <Route path="/schedule">
+                        <Route exact path="/schedule">
                             <HeadingTitle title="Chi tiết lịch hẹn" subtitle="Vui lòng xét duyệt lịch hẹn"/>
                             <NavBar userName={user.userName} userMode="user"/>
                             <SchedulePage/>
@@ -52,7 +52,7 @@ const UserPage = ({user}) => {
                             <SellHousePage/>
                             <Footer/>
                         </Route>
-                        <Route path="/house/:id">
+                        <Route exact path="/house/:id">
                             <HeadingTitle title="Thông tin chi tiết" subtitle="Vui lòng chọn ngày hẹn"/>
                             <NavBar userName={user.userName} userMode="user"/>
                             <HouseDetail/>

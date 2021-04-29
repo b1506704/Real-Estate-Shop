@@ -25,7 +25,7 @@ const UserInfo = () => {
         lat: useRef(null),
         lng: useRef(null)
     };
-    const currentLoginUser = useSelector((state) => state.user_reducer.login);
+    const currentLoginUser = useSelector((state) => state.user_reducer.loggedInUser);
     const user = useSelector((state) => state.user_reducer.currentUser);
     
     useEffect(()=> {
@@ -78,13 +78,13 @@ const UserInfo = () => {
                 currentLoginUser && currentLoginUser.isAdmin === true ?
                 <> 
                 <div> Tổng Số Nhà:</div> 
-                <span>{storeState.houseList.length}</span>
+                <span>{storeState.houseList?.length}</span>
                 <div> Tổng Số Danh Mục Nhà:</div> 
-                <span>{storeState.categoryList.length}</span>
+                <span>{storeState.categoryList?.length}</span>
                 <div> Tổng Số Người Dùng:</div> 
-                <span>{storeState.userList.length}</span>
+                <span>{storeState.userList?.length}</span>
                 <div> Tổng Số Lịch Hẹn:</div> 
-                <span>{storeState.scheduleList.length}</span>
+                <span>{storeState.scheduleList?.length}</span>
                 </>
                 
                 : null

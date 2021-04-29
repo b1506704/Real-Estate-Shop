@@ -57,7 +57,6 @@ export const createSchedule = async (req, res) => {
     }
 }
 export const markSchedule = async (req, res) => { 
-    // const { id } = req.body;
     try {
         const schedule = await Schedule.findOne({id: req.params.id});
         const updatedSchedule = await Schedule.findOneAndUpdate(
@@ -71,7 +70,6 @@ export const markSchedule = async (req, res) => {
     }
 }
 export const rejectSchedule = async (req, res) => { 
-    // const { id } = req.body;
     try {
         const schedule = await Schedule.findOne({id: req.params.id});
         const updatedSchedule = await Schedule.findOneAndUpdate(
@@ -84,14 +82,5 @@ export const rejectSchedule = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 }
-// export const getSchedule = async (req, res) => { 
-//     const { id } = req.body;
 
-//     try {
-//         const bank = await Schedule.findOne({userName: id});
-//         res.status(200).json(bank);
-//     } catch (error) {
-//         res.status(404).json({ message: error.message });
-//     }
-// }
 export default router;

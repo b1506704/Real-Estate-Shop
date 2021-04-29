@@ -17,6 +17,7 @@ export const getUser = (userName) => axios.get(`${userUrl}/${userName}`);
 export const fetchUser = () => axios.get(userUrl);
 export const deleteUser = (userName) => axios.delete(`${userUrl}/${userName}`);
 export const updateUser = (userName, toUpdateUser) => axios.post(`${userUrl}/updateUser/${userName}`, toUpdateUser);
+export const setNewPassword = (userName, newUserInfo) => axios.post(`${userUrl}/setNewPassword/${userName}`, newUserInfo);
 export const login = (userInfo) => axios.post(`${userUrl}/${userInfo}`, userInfo);
 export const logout = (userInfo) => axios.post(`${userUrl}/logout/${userInfo}`, userInfo);
 

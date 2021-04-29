@@ -16,7 +16,7 @@ const NavBar = ({userMode, userName}) => {
     const modal = useRef(null);
     const [isLoginPageOpen, setIsLoginPageOpen] = useState(false);
     const [isRegisterPageOpen, setIsRegisterPageOpen] = useState(false);
-    const currentUserInfo = useSelector ((state) => state.user_reducer.login);
+    const currentUserInfo = useSelector ((state) => state.user_reducer.loggedInUser);
     const currentNotif = useSelector((state) => state.user_reducer.notif);
     const isLoading = useSelector((state) => state.user_reducer.isLoading);
     return(
